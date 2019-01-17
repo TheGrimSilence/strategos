@@ -1,18 +1,17 @@
 import Option from './command/option';
-
-interface IXCommand {
+interface ICommand {
   _name: string;
   _version: string;
-  action(fn: () => void): IXCommand;
-  alias(alias: string): string | IXCommand;
-  description(description: string): string | IXCommand;
+  action(fn: () => void): ICommand;
+  alias(alias: string): string | ICommand;
+  description(description: string): string | ICommand;
   help(callback: () => void): void;
-  option(flags: string, description: string, fn: () => void): IXCommand;
-  usage(usage: string): string | IXCommand;
+  option(flags: string, description: string, fn: () => void): ICommand;
+  usage(usage: string): string | ICommand;
   version(version: string): void;
 }
 
-export class XCommand implements IXCommand {
+export class Command implements ICommand {
   public _name: string;
   public _version: string;
   public _versionOption: string;
@@ -26,15 +25,15 @@ export class XCommand implements IXCommand {
     }
   }
 
-  public action(fn: () => void): IXCommand {
+  public action(fn: () => void): ICommand {
     throw new Error('Method not implemented.');
   }
 
-  public alias(alias: string): string | IXCommand {
+  public alias(alias: string): string | ICommand {
     throw new Error('Method not implemented.');
   }
 
-  public description(description: string): string | IXCommand {
+  public description(description: string): string | ICommand {
     throw new Error('Method not implemented.');
   }
 
@@ -42,21 +41,23 @@ export class XCommand implements IXCommand {
     throw new Error('Method not implemented.');
   }
 
-  public name(name: string): void {
+  public name(name: string): this {
     this._name = name;
+
+    return this;
   }
 
-  public option(flags: string, description: string, fn: () => void): IXCommand {
+  public option(flags: string, description: string, fn: () => void): ICommand {
     throw new Error('Method not implemented.');
   }
 
-  public usage(usage: string): string | IXCommand {
+  public usage(usage: string): string | ICommand {
     throw new Error('Method not implemented.');
   }
   /**
    * Set the command version.
    */
-  public version(version: string): XCommand {
+  public version(version: string): Command {
     this._version = version;
     const versionOption = new Option(
       '-v, --version',

@@ -9,6 +9,7 @@
     "no-implicit-dependencies": [false, "dev"],
     "no-string-literal": false,
     "object-literal-sort-keys": false,
-    "no-shadowed-variable": false
+    "no-shadowed-variable": false,
+    "no-namespace": false
   }
 }

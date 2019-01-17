@@ -8,6 +8,6 @@ Sparky.task('default', () => {
     cache: false,
   });
 
-  fuse.bundle('xhouston').instructions('> index.ts');
+  fuse.bundle('xhouston').instructions('> command.ts');
   fuse.run();
 });
