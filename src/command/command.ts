@@ -6,7 +6,9 @@ export class Command {
   public _versionOption: string;
   public options: Option[] = [];
 
-  public constructor() {}
+  public constructor(name: string) {
+    this._name = name;
+  }
 
   public on(event: string, fn: () => void): void {
     if (event) {
@@ -14,6 +16,10 @@ export class Command {
     }
   }
 
+  /**
+   * Register a callback for the command.
+   * @param fn
+   */
   public action(fn: () => void): this {
     throw new Error('Method not implemented.');
   }
@@ -62,5 +68,3 @@ export class Command {
     return this;
   }
 }
-
-export const xcommand = new Command();
