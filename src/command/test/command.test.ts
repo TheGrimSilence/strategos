@@ -1,6 +1,6 @@
-import { Command } from '../../command';
+import { Command } from '../command';
 
-const command = new Command('test').version('1.0.0');
+const command = new Command().name('test').version('1.0.0');
 
 test('Instantiation is successful', () => {
   expect(command._name).toBe('test');

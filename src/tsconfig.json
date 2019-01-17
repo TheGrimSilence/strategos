@@ -2,12 +2,14 @@
   "compilerOptions": {
     "module": "commonjs",
     "moduleResolution": "node",
-    "target": "es6",
-    "noUnusedLocals": true,
+    "preserveConstEnums": true,
+    "target": "es5",
+    "declaration": true,
     "removeComments": true,
     "baseUrl": ".",
-    "outDir": "../lib",
-    "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true
-  }
+    "sourceMap": true,
+    "sourceRoot": ".",
+    "outDir": "../lib"
+  },
+  "files": ["./xhouston.ts"]
 }

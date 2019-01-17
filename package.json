@@ -10,7 +10,7 @@
   "scripts": {
     "build": "yarn test && yarn clean && yarn compile",
     "clean": "rimraf lib",
-    "compile": "ts-node fuse.ts",
+    "compile": "tsc -p ./src/tsconfig.json",
     "pub": "yarn publish --access public",
     "prepublishOnly": "yarn test && auto-changelog -p && git add CHANGELOG.md",
     "test": "jest",

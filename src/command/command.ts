@@ -1,17 +1,6 @@
-import Option from './command/option';
-interface ICommand {
-  _name: string;
-  _version: string;
-  action(fn: () => void): ICommand;
-  alias(alias: string): string | ICommand;
-  description(description: string): string | ICommand;
-  help(callback: () => void): void;
-  option(flags: string, description: string, fn: () => void): ICommand;
-  usage(usage: string): string | ICommand;
-  version(version: string): void;
-}
+import Option from './option';
 
-export class Command implements ICommand {
+export class Command {
   public _name: string;
   public _version: string;
   public _versionOption: string;
@@ -25,15 +14,15 @@ export class Command implements ICommand {
     }
   }
 
-  public action(fn: () => void): ICommand {
+  public action(fn: () => void): this {
     throw new Error('Method not implemented.');
   }
 
-  public alias(alias: string): string | ICommand {
+  public alias(alias: string): string | this {
     throw new Error('Method not implemented.');
   }
 
-  public description(description: string): string | ICommand {
+  public description(description: string): string | this {
     throw new Error('Method not implemented.');
   }
 
@@ -47,11 +36,11 @@ export class Command implements ICommand {
     return this;
   }
 
-  public option(flags: string, description: string, fn: () => void): ICommand {
+  public option(flags: string, description: string, fn: () => void): this {
     throw new Error('Method not implemented.');
   }
 
-  public usage(usage: string): string | ICommand {
+  public usage(usage: string): string | this {
     throw new Error('Method not implemented.');
   }
   /**
@@ -73,3 +62,5 @@ export class Command implements ICommand {
     return this;
   }
 }
+
+export const xcommand = new Command();
