@@ -1,1 +1,1 @@
-export { Command } from './command/command';
+export { xcommand as Command } from './command/command';
