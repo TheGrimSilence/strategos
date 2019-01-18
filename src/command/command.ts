@@ -1,7 +1,8 @@
+import { EventEmitter } from 'events';
 import Option from './option';
-import { EALEMPT, EALISNM, EARBLNK, ENOARGS } from './utils/errorCodes';
+import { EALISNM, EARBLNK, ENOARGS } from './utils/errorCodes';
 
-export class Command {
+class Command extends EventEmitter {
   /** Should we disclose underlying operations? */
   public _verbose: boolean;
   /** The command's version. */
@@ -19,14 +20,12 @@ export class Command {
   public _description: string;
 
   public constructor(name: string, verbose?: boolean) {
+    super();
     this._name = name;
     this._verbose = verbose;
-  }
-
-  public on(event: string, fn: () => void): void {
-    if (event) {
-      fn();
-    }
+    console.log('Orginal:', name);
+    const args = name.split(/ +/);
+    console.log('Altered:', args);
   }
 
   /**
@@ -48,7 +47,7 @@ export class Command {
       command = this.commands[this.commands.length - 1];
     }
 
-    if (arguments.length < 0) throw ENOARGS;
+    if (arguments.length === 0) throw ENOARGS;
     if (alias === '') throw EARBLNK;
     if (alias === this._name) throw EALISNM;
 
@@ -66,7 +65,7 @@ export class Command {
    * @param description
    */
   public description(description: string): this {
-    if (arguments.length) throw ENOARGS;
+    if (arguments.length === 0) throw ENOARGS;
     if (description === '') throw EARBLNK;
 
     this._description = description;
@@ -103,6 +102,7 @@ export class Command {
    * Set the command version.
    */
   public version(version: string): Command {
+    if (arguments.length === 0) throw ENOARGS;
     this._version = version;
     const versionOption = new Option(
       '-v, --version',
@@ -119,7 +119,16 @@ export class Command {
   }
 }
 
-// export const xcommand = new Command();
-export function xcommand(name: string): Command {
-  return new Command('name');
+export function xcommand(name: string, verbose?: boolean): Command {
+  return verbose ? new Command(name, verbose) : new Command(name);
 }
+
+interface ICommand {
+  name: string;
+  fn?: (...args: any) => any;
+}
+
+const iCommand: ICommand = {
+  name: 'west',
+};
+iCommand.name = 'test';
