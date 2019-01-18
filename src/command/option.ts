@@ -9,7 +9,11 @@ export default class Option {
   public short: string;
   public long: string;
 
-  public constructor(flags: string | string[], description: string) {
+  public constructor(
+    flags: string | string[],
+    description: string,
+    verbose?: boolean,
+  ) {
     this.flags = flags;
     this.description = description || '';
     this.required = flags.indexOf('<') >= 0;
@@ -17,10 +21,11 @@ export default class Option {
     this.bool = flags.indexOf('-no-') === -1;
 
     flags = (flags as string).split(/[ ,|]+/);
-    if (flags.length > 1 && !/^[[<]/.test(flags[1])) {
-      this.short = flags.shift();
-    }
+
+    if (flags.length > 1 && !/^[[<]/.test(flags[1])) this.short = flags.shift();
+
     this.long = flags.shift();
+    if (verbose) console.log(this.short, this.long);
   }
   /**
    * Returns the option's name.
