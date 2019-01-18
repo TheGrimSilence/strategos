@@ -1,13 +1,19 @@
-import { Command } from '../command';
+import { xcommand } from '../command';
 
-const command = new Command('test', true).version('1.0.0').alias('test');
+const commandName = 'test <dir> [otherDirs...]';
+const commandVersion = '1.2.3';
+const commandAlias = 't';
+
+const command = xcommand(commandName, true)
+  .version(commandVersion)
+  .alias(commandAlias);
 
 test('Instantiation is successful', () => {
-  expect(command._name).toBe('test');
+  expect(command._name).toBe(commandName);
 });
 
 test('Version returns correct value', () => {
-  expect(command._version).toBe('1.0.0');
+  expect(command._version).toBe(commandVersion);
 });
 
 test('Alias is set correctly', () => {
