@@ -12,6 +12,7 @@
     "no-shadowed-variable": false,
     "no-namespace": false,
     "variable-name": false,
-    "max-classes-per-file": false
+    "max-classes-per-file": false,
+    "curly": false
   }
 }

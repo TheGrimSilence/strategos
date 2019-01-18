@@ -1,5 +1,5 @@
 import Option from './option';
-import { EALEMPT, EALISNM } from './utils/errorCodes';
+import { EALEMPT, EALISNM, EARBLNK, ENOARGS } from './utils/errorCodes';
 
 export class Command {
   /** Should we disclose underlying operations? */
@@ -16,6 +16,7 @@ export class Command {
   public _alias: any;
   /** The name of the command. */
   public _name: string;
+  public _description: string;
 
   public constructor(name: string, verbose?: boolean) {
     this._name = name;
@@ -46,23 +47,30 @@ export class Command {
     if (this.commands.length !== 0) {
       command = this.commands[this.commands.length - 1];
     }
-    if (alias === '') {
-      throw EALEMPT;
-    }
-    if (alias === this._name) {
-      throw EALISNM;
-    }
+
+    if (arguments.length < 0) throw ENOARGS;
+    if (alias === '') throw EARBLNK;
+    if (alias === this._name) throw EALISNM;
+
     if (alias && this._verbose) {
       console.log(`Alias ${alias}, set.`);
     }
-    console.log(arguments);
-    console.log(arguments.length);
+
     command._alias = alias;
 
     return this;
   }
 
+  /**
+   * Describe the command.
+   * @param description
+   */
   public description(description: string): this {
+    if (arguments.length) throw ENOARGS;
+    if (description === '') throw EARBLNK;
+
+    this._description = description;
+
     return this;
   }
 

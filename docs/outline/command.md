@@ -1,37 +1,11 @@
-# `Command(name: string)`
+# Command Checklist
 
-### `alias(alias: string)`
-
-> Add an alias for the command.
-
-### `option(flags: string, description: string, callback()?: void)`
-
-> Add an option to the command.
-
-### `description(desc: string)`
-
-> Add a description to the command.
-
-### `options(options: ICommandOptions)`
-
-> Add an object to be used as the options.
-
-### `version()`
-
-> Return the version of the command.
-
-### `help()`
-
-> Return helpful information.
-
-### `usage()`
-
-> Return usage information.
-
-### `action(fn(): void)`
-
-> Add an action to be run.
-
-### `on(event: string, callback(): void)`
-
-> Add an event listener
+- [ ] `action()`: Add an action to be run.
+- [x] ~~`alias()`: Add an alias for the command.~~
+- [x] ~~`description()`: Add a description to the command.~~
+- [ ] `help()`: Return helpful information.
+- [x] ~~`on()`: Add an event listener~~
+- [ ] `option()`: Add an option to the command.
+- [ ] `options()`: Add an object to be used as the options.
+- [ ] `usage()`: Return usage information.
+- [x] ~~`version()`: Return the version of the command.~~
