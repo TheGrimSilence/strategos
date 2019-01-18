@@ -9,13 +9,13 @@ const command = xcommand(commandName, true)
   .alias(commandAlias);
 
 test('Instantiation is successful', () => {
-  expect(command._name).toBe(commandName);
+  expect(command.getName).toBe(commandName);
 });
 
 test('Version returns correct value', () => {
-  expect(command._version).toBe(commandVersion);
+  expect(command.getVersion).toBe(commandVersion);
 });
 
 test('Alias is set correctly', () => {
-  expect(command._alias).toBeDefined();
+  expect(command.getAlias).toBeDefined();
 });

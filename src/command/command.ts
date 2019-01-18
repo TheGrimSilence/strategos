@@ -4,28 +4,25 @@ import { EALISNM, EARBLNK, ENOARGS } from './utils/errorCodes';
 
 class Command extends EventEmitter {
   /** Should we disclose underlying operations? */
-  public _verbose: boolean;
+  private _verbose: boolean;
   /** The command's version. */
-  public _version: string;
+  private _version: string;
   /** The version option within the running command. */
-  public _versionOption: string;
+  private _versionOption: string;
   /** The options we've set. */
-  public options: Option[] = [];
+  private _options: Option[] = [];
   /** The command itself. */
-  public commands = [];
+  private _commands = [];
   /** The command alias. */
-  public _alias: any;
+  private _alias: any;
   /** The name of the command. */
-  public _name: string;
-  public _description: string;
+  private _name: string;
+  private _description: string;
 
   public constructor(name: string, verbose?: boolean) {
     super();
     this._name = name;
     this._verbose = verbose;
-    console.log('Orginal:', name);
-    const args = name.split(/ +/);
-    console.log('Altered:', args);
   }
 
   /**
@@ -43,8 +40,8 @@ class Command extends EventEmitter {
   public alias(alias?: string): this {
     let command = this;
 
-    if (this.commands.length !== 0) {
-      command = this.commands[this.commands.length - 1];
+    if (this._commands.length !== 0) {
+      command = this._commands[this._commands.length - 1];
     }
 
     if (arguments.length === 0) throw ENOARGS;
@@ -83,19 +80,19 @@ class Command extends EventEmitter {
     return this;
   }
 
-  public option(
-    flags: string | {},
-    description?: string,
-    fn?: () => void,
-  ): this {
+  public option(flags: string, description?: string, fn?: () => void): this {
+    throw new Error('Method not implemented.');
+  }
+
+  public options(options: {}) {
     throw new Error('Method not implemented.');
   }
 
   public subCommand(): this {
-    return this;
+    throw new Error('Method not implemented.');
   }
 
-  public usage(usage: string): string | this {
+  public usage(usage: string): this {
     throw new Error('Method not implemented.');
   }
   /**
@@ -107,9 +104,10 @@ class Command extends EventEmitter {
     const versionOption = new Option(
       '-v, --version',
       'return the command\'s version.',
+      this._verbose,
     );
-    this._versionOption = versionOption.long.substr(2);
-    this.options.push(versionOption);
+    this._versionOption = versionOption.long.substr(2) || 'version';
+    this._options.push(versionOption);
     this.on('option:' + this._versionOption, () => {
       process.stdout.write(`${this._name} v${this._version}` + '\n');
       process.exitCode = 0;
@@ -117,18 +115,45 @@ class Command extends EventEmitter {
 
     return this;
   }
+
+  /**
+   * ! Strictly for testing private internals
+   */
+  public get getAlias(): string {
+    return this._alias;
+  }
+  /**
+   * ! Strictly for testing private internals
+   */
+  public get getName(): string {
+    return this._name;
+  }
+  /**
+   * ! Strictly for testing private internals
+   */
+  public get getVersion(): string {
+    return this._version;
+  }
 }
 
 export function xcommand(name: string, verbose?: boolean): Command {
-  return verbose ? new Command(name, verbose) : new Command(name);
+  return verbose === true ? new Command(name, verbose) : new Command(name);
 }
-
+/**
+ * ! BELOW IS STRICTLY FOR TESTING A PROPOSED API ALTERATION
+ */
 interface ICommand {
   name: string;
+  description?: string;
   fn?: (...args: any) => any;
 }
 
 const iCommand: ICommand = {
   name: 'west',
+  description: 'A test',
 };
 iCommand.name = 'test';
+iCommand.description = 'A random test command';
+iCommand.fn = (testy) => {
+  console.log(testy);
+};
