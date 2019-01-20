@@ -4,8 +4,9 @@ const commandName = 'test <dir> [otherDirs...]';
 const commandVersion = '1.2.3';
 const commandAlias = 't';
 
-const command = xcommand(commandName, true)
+const command = xcommand(commandName)
   .version(commandVersion)
+  .verbose()
   .alias(commandAlias);
 
 test('Instantiation is successful', () => {
