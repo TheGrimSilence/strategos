@@ -87,6 +87,7 @@ export class Command extends BaseCommand {
       this._args.length ? args.join(' ') : ''
     }`;
     if (arguments.length === 0) return this._usage || usage;
+    this._usage = str;
 
     return this;
   }
