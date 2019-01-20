@@ -1,28 +1,11 @@
-import { EventEmitter } from 'events';
-import Option from './option';
+import { BaseCommand } from './BaseCommand';
+import { Option } from './Option';
 import { EALISNM, EARBLNK, ENOARGS } from './utils/errorCodes';
 
-class Command extends EventEmitter {
-  /** Should we disclose underlying operations? */
-  private _verbose: boolean;
-  /** The command's version. */
-  private _version: string;
-  /** The version option within the running command. */
-  private _versionOption: string;
-  /** The options we've set. */
-  private _options: Option[] = [];
-  /** The command itself. */
-  private _commands = [];
-  /** The command alias. */
-  private _alias: any;
-  /** The name of the command. */
-  private _name: string;
-  private _description: string;
-
-  public constructor(name: string, verbose?: boolean) {
+export class Command extends BaseCommand {
+  public constructor(name: string | {}) {
     super();
-    this._name = name;
-    this._verbose = verbose;
+    if (typeof name === 'string') this._name = name;
   }
 
   /**
@@ -61,17 +44,23 @@ class Command extends EventEmitter {
    * Describe the command.
    * @param description
    */
-  public description(description: string): this {
+  public description(description: string, argsDescription: string): this {
     if (arguments.length === 0) throw ENOARGS;
     if (description === '') throw EARBLNK;
 
     this._description = description;
+    this._argsDescription = argsDescription;
 
     return this;
   }
 
-  public help(callback: () => void): void {
-    throw new Error('Method not implemented.');
+  public help(callback?: (callback: any) => any): void {
+    if (!callback) {
+      callback = (passthrough) => passthrough;
+    }
+    process.stdout.write(callback(this._helpInformation()));
+    this.emit('--help');
+    process.exit();
   }
 
   public name(name: string): this {
@@ -92,8 +81,22 @@ class Command extends EventEmitter {
     throw new Error('Method not implemented.');
   }
 
-  public usage(usage: string): this {
-    throw new Error('Method not implemented.');
+  public usage(str?: string): string | this {
+    const args = this._args.map((arg) => this._humanReadableArgumentName(arg));
+    const usage = `[options] ${this._commands.length ? '[command]' : ''} ${
+      this._args.length ? args.join(' ') : ''
+    }`;
+    if (arguments.length === 0) return this._usage || usage;
+
+    return this;
+  }
+  /**
+   * Make the command talkative.
+   */
+  public verbose(): this {
+    this._verbose = true;
+
+    return this;
   }
   /**
    * Set the command version.
@@ -136,24 +139,6 @@ class Command extends EventEmitter {
   }
 }
 
-export function xcommand(name: string, verbose?: boolean): Command {
-  return verbose === true ? new Command(name, verbose) : new Command(name);
+export function xcommand(name: string): Command {
+  return new Command(name);
 }
-/**
- * ! BELOW IS STRICTLY FOR TESTING A PROPOSED API ALTERATION
- */
-interface ICommand {
-  name: string;
-  description?: string;
-  fn?: (...args: any) => any;
-}
-
-const iCommand: ICommand = {
-  name: 'west',
-  description: 'A test',
-};
-iCommand.name = 'test';
-iCommand.description = 'A random test command';
-iCommand.fn = (testy) => {
-  console.log(testy);
-};
