@@ -1,6 +1,6 @@
 import camelCase from './utils/camelCase';
 
-export default class Option {
+export class Option {
   public flags: string | string[];
   public description: string;
   public required: boolean;
@@ -8,6 +8,7 @@ export default class Option {
   public bool: boolean;
   public short: string;
   public long: string;
+  public defaultValue: string;
 
   public constructor(
     flags: string | string[],
