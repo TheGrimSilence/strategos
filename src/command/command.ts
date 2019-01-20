@@ -11,14 +11,50 @@ export class Command extends EventEmitter {
   private _name: string;
   private _noHelp: boolean;
   private _options: Option[] = [];
+  private _rawArgs: string[];
+  private _testArgs;
   private _usage: string;
   private _verbose: boolean;
   private _version: string;
   private _versionOption: string;
 
-  public constructor(name?: string | {}) {
+  public constructor(name?: string, description?: string | {}, options?: {}) {
     super();
-    if (typeof name === 'string') this._name = name;
+    // * Command Setup
+    let commandArgs: string[];
+    if (typeof description === 'object' && description !== null) {
+      options = description;
+      description = null;
+    }
+    options = options || {};
+    this._name = name;
+    console.log(name.split(/ +/));
+    commandArgs = name.split(/ +/);
+    this._args = [];
+    // const command = new Command(commandArgs.shift());
+
+    // if (description && typeof description === 'string')
+    //   command.description(description);
+    // this._commands.push(command);
+    // command.parseExpectedArgs(commandArgs);
+    // * Command Arg Parsing
+    this._rawArgs = process.argv;
+    this._name = this._name;
+    const parsed = this._parseOptions(this._normalizeArgs(this._args.slice(2)));
+    this._args = parsed.args;
+    this._parseArgs(this._args, parsed.unknown);
+    console.log(this._args, parsed.args);
+  }
+
+  public parse(argv: string[]) {
+    this._rawArgs = process.argv;
+    this._name = this._name;
+    const parsed = this._parseOptions(this._normalizeArgs(argv.slice(2)));
+    this._args = parsed.args;
+    const result = this._parseArgs(this._args, parsed.unknown);
+    console.log(this._args, parsed.args);
+
+    return result;
   }
 
   /**
@@ -56,7 +92,7 @@ export class Command extends EventEmitter {
   /**
    * What does the command do?
    */
-  public description(description: string, argsDescription: string): this {
+  public description(description: string, argsDescription?: string): this {
     if (arguments.length === 0) throw ENOARGS;
     if (description === '') throw EARBLNK;
 
@@ -69,13 +105,15 @@ export class Command extends EventEmitter {
   /**
    * Return helpful information.
    */
-  public help(callback?: (callback: any) => any): void {
+  public help(callback?: (callback: any) => any): this {
     if (!callback) {
       callback = (passthrough) => passthrough;
     }
     process.stdout.write(callback(this._helpInformation()));
     this.emit('--help');
     process.exit();
+
+    return this;
   }
 
   public name(name: string): this | string {
@@ -96,6 +134,39 @@ export class Command extends EventEmitter {
 
   public options(options: {}) {
     throw new Error('Method not implemented.');
+  }
+
+  public parseExpectedArgs(args: string[]): this {
+    if (!args.length) return;
+    const self = this;
+    args.forEach((arg) => {
+      const argDetails = {
+        name: '',
+        required: false,
+        variadic: false,
+      };
+
+      switch (arg[0]) {
+        case '<':
+          argDetails.required = true;
+          argDetails.name = arg.slice(1, -1);
+          break;
+        case '[':
+          argDetails.name = arg.slice(1, -1);
+          break;
+      }
+
+      if (argDetails.name.length > 3 && argDetails.name.slice(-3) === '...') {
+        argDetails.variadic = true;
+        argDetails.name = argDetails.name.slice(0, -3);
+      }
+
+      if (argDetails.name) {
+        self._args.push(argDetails);
+      }
+    });
+
+    return this;
   }
 
   public subCommand(): this {
@@ -209,7 +280,7 @@ export class Command extends EventEmitter {
       command = command + '|' + this._alias;
     }
 
-    const usage = ['Usage:' + command + ' ' + Command.prototype.usage(), ''];
+    const usage = ['Usage:' + command + ' ' + this.usage(), ''];
     let commands = [];
     const commandHelp = this._commandHelp();
     if (commandHelp) commands = [commandHelp];
@@ -258,6 +329,37 @@ export class Command extends EventEmitter {
     );
   }
 
+  private _normalizeArgs(args: string[]): string[] {
+    let ret: string[] = [];
+    let arg: string;
+    let lastOption: Option;
+    let index: number;
+
+    for (let i = 0; i < args.length; i++) {
+      arg = args[i];
+      if (i > 0) lastOption = this._optionFor(args[i - 1]);
+      if (arg === '--') {
+        ret = ret.concat(args.slice(i));
+        break;
+      } else if (lastOption && lastOption.required) {
+        ret.push(arg);
+      } else if (arg.length > 1 && arg[0] === '-' && arg[1] !== '-') {
+        arg
+          .slice(1)
+          .split('')
+          .forEach((c) => {
+            ret.push('-' + c);
+          });
+      } else if (/^--/.test(arg) && ~(index = arg.indexOf('='))) {
+        ret.push(arg.slice(0, index), arg.slice(index + 1));
+      } else {
+        ret.push(arg);
+      }
+    }
+
+    return ret;
+  }
+
   private _optionHelp() {
     const width = this._padWidth();
 
@@ -297,7 +399,7 @@ export class Command extends EventEmitter {
     options = options || [];
     for (const i of options) {
       if (options[i] === '--help' || options[i] === '-h') {
-        Command.prototype.help();
+        this.help();
         process.exitCode = 0;
       }
     }
@@ -321,7 +423,7 @@ export class Command extends EventEmitter {
     return width;
   }
 
-  private _parseArguments(args: string[], unknown: string[]) {
+  private _parseArgs(args: string[], unknown: string[]) {
     let name;
 
     if (args.length) {
@@ -345,9 +447,11 @@ export class Command extends EventEmitter {
         this.emit('command:*');
       }
     }
+
+    return this;
   }
 
-  private _parseOptions(argv: string[]) {
+  private _parseOptions(argv: string[]): { args: string[]; unknown: string[] } {
     const args: string[] = [];
     const unknown: string[] = [];
     let arg: string;
@@ -372,7 +476,7 @@ export class Command extends EventEmitter {
       if (option) {
         if (option.required) {
           arg = argv[++i];
-          if (arg === null) return this._optionMissing(option);
+          // if (arg === null) return this._optionMissing(option);
           this.emit('option:' + option.name(), arg);
         } else if (option.optional) {
           arg = argv[i + 1];
