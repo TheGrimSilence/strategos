@@ -9,7 +9,8 @@
     "baseUrl": ".",
     "sourceMap": true,
     "sourceRoot": ".",
-    "outDir": "../lib"
+    "outDir": "../lib",
+    "strict": true
   },
   "files": ["./xhouston.ts"]
 }
