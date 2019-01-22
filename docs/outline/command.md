@@ -86,3 +86,80 @@ It doesn't work, instead of completing the chain, it makes a new chain completel
 New approach, try out a function based way for subcommands to work.
 
 Also: test out object-based instantiation?
+
+## 1/21/2019, 1:43:37 AM
+
+Alright, so we've done some testing, the basics work, hooray. However, we're limited, in that everything must be under a single instance. This is ugly. The ideal solution is as follows:
+
+```typescript
+import { Command } from 'xhouston';
+
+Command('add')
+  .version('1.0.0')
+  .description('Add a new package');
+
+Command('remove')
+  .version('2.3.5')
+  .description('Remove a package');
+// A sub-command parent can't have a description or version if it is a
+// pass-through parent.
+Command('global').subCommand(
+  'add',
+  { description: 'Add a global package', version: '4.57.4' },
+  () => {
+    new GlobalAdd();
+  }
+);
+```
+
+Currently, every command added works to a degree, but we should go ahead and switch to the Object-based API
+
+## 1/21/2019, 4:02:12 AM
+
+I've setup the basic api for the new command code. But I'm here again because I want to add some ideas to the structure.
+
+Basically, every command builds its own personal object. When running `parse()`, xHouston should then check the entire structure, we meaning the entirety should look like the object below.
+
+> We also want to add a possible global `version()` link because our api allows for each command to have its own version, this is because that's how yarn does it, add this is meant to benefit the Yarn team as well as myself.
+
+```typescript
+// As usual, we're assuming a basic Yarn-like program
+[
+  {
+    name: 'xHoustonCommandManfifest', // this is reserved and cannot be set by anyone but xHouston
+    version: '1.2.0', // the global version
+    description: 'Xploration by Adrian\'s favorite package manager!',
+  },
+  {
+    name: 'add',
+    alias: 'a',
+    description: 'Add a package locally',
+    version: '1.2.0',
+  },
+  {
+    name: 'remove',
+    alias: 'r',
+    description: 'Remove a local package',
+    version: '1.2.5',
+  },
+  {
+    name: 'global',
+    alias: 'g',
+    passThrough: true, // this tells xHouston that we're not adding the usual description, etc...
+    subCommands: [
+      {
+        name: 'add',
+        alias: 'a',
+        description: 'Add a package globally',
+        version: '1.2.0',
+      },
+      {
+        name: 'remove',
+        alias: 'r',
+        description: 'Remove a global package',
+        version: '1.2.5',
+      },
+    ],
+  },
+]
+```

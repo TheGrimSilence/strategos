@@ -27,9 +27,11 @@ export class Command extends EventEmitter {
       description = null;
     }
     options = options || {};
-    this._name = name;
-    console.log(name.split(/ +/));
-    commandArgs = name.split(/ +/);
+    if (name) {
+      this._name = name;
+      console.log(name.split(/ +/));
+      commandArgs = name.split(/ +/);
+    }
     this._args = [];
     // const command = new Command(commandArgs.shift());
 
@@ -38,21 +40,28 @@ export class Command extends EventEmitter {
     // this._commands.push(command);
     // command.parseExpectedArgs(commandArgs);
     // * Command Arg Parsing
-    this._rawArgs = process.argv;
-    this._name = this._name;
-    const parsed = this._parseOptions(this._normalizeArgs(this._args.slice(2)));
-    this._args = parsed.args;
-    this._parseArgs(this._args, parsed.unknown);
-    console.log(this._args, parsed.args);
+    // this._rawArgs = process.argv;
+    // this._name = this._name;
+    // const argv = process.argv.slice(2);
+    // const parsed = this._parseOptions(this._normalizeArgs(argv));
+    // this._args = parsed.args;
+    // this._parseArgs(this._args, parsed.unknown);
+    // console.log(this._args, parsed.args, parsed.unknown);
+  }
+
+  public addArgs(argv) {
+    this._args = argv;
+
+    return this;
   }
 
   public parse(argv: string[]) {
     this._rawArgs = process.argv;
     this._name = this._name;
-    const parsed = this._parseOptions(this._normalizeArgs(argv.slice(2)));
+    const parsed = this._parseOptions(this._normalizeArgs(argv));
     this._args = parsed.args;
     const result = this._parseArgs(this._args, parsed.unknown);
-    console.log(this._args, parsed.args);
+    console.log(this._args, parsed.args, parsed.unknown);
 
     return result;
   }
@@ -380,7 +389,7 @@ export class Command extends EventEmitter {
   }
 
   private _optionFor(arg: string): Option {
-    for (const i of arg) {
+    for (let i = 0; i < this._options.length; i++) {
       if (this._options[i].is(arg)) return this._options[i];
     }
   }
@@ -397,7 +406,7 @@ export class Command extends EventEmitter {
 
   private _outputHelpIfNecessary(options) {
     options = options || [];
-    for (const i of options) {
+    for (let i = 0; i < options.length; i++) {
       if (options[i] === '--help' || options[i] === '-h') {
         this.help();
         process.exitCode = 0;
@@ -426,6 +435,8 @@ export class Command extends EventEmitter {
   private _parseArgs(args: string[], unknown: string[]) {
     let name;
 
+    console.log(args, unknown);
+
     if (args.length) {
       name = args[0];
       if (this.listeners('command:' + name).length) {
@@ -433,7 +444,9 @@ export class Command extends EventEmitter {
       } else {
         this.emit('command:*', args);
       }
+      console.log(args, unknown);
     } else {
+      console.log(args, unknown);
       this._outputHelpIfNecessary(unknown);
 
       if (unknown.length > 0) {
@@ -457,6 +470,7 @@ export class Command extends EventEmitter {
     let arg: string;
     let literal: boolean;
     let option;
+    console.log(argv);
 
     for (let i = 0; i < argv.length; i++) {
       arg = argv[i];
@@ -472,6 +486,8 @@ export class Command extends EventEmitter {
       }
 
       option = this._optionFor(arg);
+
+      console.log(option);
 
       if (option) {
         if (option.required) {
@@ -494,12 +510,14 @@ export class Command extends EventEmitter {
 
       if (arg.length > 1 && arg[0] === '-') {
         unknown.push(arg);
+        console.log(arg);
 
         if (i + 1 < argv.length && argv[i + 1][0] + '-') {
           unknown.push(argv[++i]);
         }
         continue;
       }
+      console.log(unknown);
       args.push(arg);
     }
 
@@ -530,6 +548,6 @@ export class Command extends EventEmitter {
   }
 }
 
-export function xcommand(name: string): Command {
+export function xcommand(name?: string): Command {
   return new Command(name);
 }
