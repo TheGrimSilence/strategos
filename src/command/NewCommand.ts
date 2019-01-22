@@ -7,6 +7,9 @@ export class Command extends BaseCommand {
   public constructor(name?: string, description?: string, action?: () => void) {
     super();
     // TODO: if no arguments are passed, assume we're in the global scope, i.e. running Command.parse()
+    if (name === undefined) {
+      console.log('Global scope detected!');
+    }
     // TODO: validate the object and error on missing keys or values
     // TODO: add the information to the command object
     this._commands.push(this._command);

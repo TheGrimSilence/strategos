@@ -128,7 +128,7 @@ Basically, every command builds its own personal object. When running `parse()`,
   {
     name: 'xHoustonCommandManfifest', // this is reserved and cannot be set by anyone but xHouston
     version: '1.2.0', // the global version
-    description: 'Xploration by Adrian\'s favorite package manager!',
+    description: "Xploration by Adrian's favorite package manager!",
   },
   {
     name: 'add',
@@ -161,5 +161,42 @@ Basically, every command builds its own personal object. When running `parse()`,
       },
     ],
   },
-]
+];
+```
+
+## 1/22/2019, 2:02:27 AM
+
+Alright, so far, everything is working as planned in a basic form. Meaning I have yet to implement any hardcore code. Check the blame to see where I am in history.
+
+Currently every instance of `Command()` acts as a command definition because, that's how it's coded. However, one thing that's bugged me is the empty object at the end of the array as you can see below. Turns out, this is because of how xHouston's system works. Unfortunately, calling a manifest creates an empty object.
+
+```bash
+Global scope detected!
+Global scope detected!
+Global scope detected!
+Global scope detected!
+creating subCommand Array
+Global scope detected!
+[ { name: 'add',
+    alias: 'a',
+    description: 'Add a package locally',
+    action: [Function] },
+  { name: 'remove',
+    alias: 'r',
+    description: 'Remove a local package',
+    action: [Function] },
+  { name: 'list',
+    alias: 'l',
+    description: 'List local packages',
+    action: [Function] },
+  { name: 'global',
+    alias: 'g',
+    subCommands:
+     [ { name: 'add',
+         description: 'add a package globally',
+         action: [Function: action] },
+       { name: 'remove',
+         description: 'remove a local package',
+         action: [Function] } ] },
+  {} ]
 ```
