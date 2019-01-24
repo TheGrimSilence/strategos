@@ -13,6 +13,7 @@
     "no-namespace": false,
     "variable-name": false,
     "max-classes-per-file": false,
-    "curly": false
+    "curly": false,
+    "ordered-imports": false
   }
 }
