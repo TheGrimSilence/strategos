@@ -1,6 +1,11 @@
 import { SemVer } from 'semver';
 import { VerboseLevel, VerboseStyle } from './base/verbose';
-import { CommandInternals, ICommand } from './CommandInternals';
+import {
+  CommandInternals,
+  ICommand,
+  IOption,
+  ISubCommand,
+} from './CommandInternals';
 import { ICommandAPI } from './ICommand';
 
 class Command extends CommandInternals implements ICommandAPI {
@@ -22,9 +27,6 @@ class Command extends CommandInternals implements ICommandAPI {
     }
   }
 
-  /**
-   * The command alias.
-   */
   public alias(alias: string): this {
     if (arguments.length === 0) this._errorNoArgs('alias');
     if (typeof alias !== 'string')
@@ -34,15 +36,10 @@ class Command extends CommandInternals implements ICommandAPI {
     return this;
   }
 
-  /**
-   * Set a callback `fn`
-   */
   public action(fn: () => void): this {
     return this;
   }
-  /**
-   * The command description.
-   */
+
   public description(desc: string): this {
     if (arguments.length === 0) this._errorNoArgs('description');
     if (typeof desc !== 'string')
@@ -52,23 +49,38 @@ class Command extends CommandInternals implements ICommandAPI {
 
     return this;
   }
-  /**
-   * Ends a command chain, building it and pushing it to the list.
-   */
+
   public end(): void {
     // TODO: Parse everything
     // TODO: Build the command
     // TODO: Push it to the list
   }
-  /**
-   * Returns helpful information.
-   */
+
   public help(): this {
     return this;
   }
-  /**
-   * Set the command usage.
-   */
+
+  public option(
+    flags: string,
+    desc?: string,
+    par?: RegExp | (() => void),
+    defaultVal?: string,
+  ): this {
+    return this;
+  }
+
+  public options(opt: IOption[]): this {
+    return this;
+  }
+
+  public subCommand(subCmd: string, desc?: string, fn?: () => void): this {
+    return this;
+  }
+
+  public subCommands(subCmds: ISubCommand[]): this {
+    return this;
+  }
+
   public usage(usage?: string): this {
     if (usage && typeof usage !== 'string')
       this._errorWrongType('usage', 'usage', 'string');
@@ -77,11 +89,7 @@ class Command extends CommandInternals implements ICommandAPI {
 
     return this;
   }
-  /**
-   * Reveals the internal data process.
-   *
-   * Defaults: Xploration, General
-   */
+
   public verbose(style?: VerboseStyle, level?: VerboseLevel): this {
     if (style) this._command.verbose.verboseStyle = style;
     else this._command.verbose.verboseStyle = VerboseStyle.Xploration;
@@ -90,9 +98,7 @@ class Command extends CommandInternals implements ICommandAPI {
 
     return this;
   }
-  /**
-   * Set the command version.
-   */
+
   public version(vers?: SemVer): this {
     if (arguments.length === 0) this._errorNoArgs('version');
 

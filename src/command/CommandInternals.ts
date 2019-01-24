@@ -48,7 +48,7 @@ export interface ICommand {
   version: SemVer;
 }
 
-interface IOption {
+export interface IOption {
   description: string;
   flags: {
     long: string;
@@ -60,13 +60,13 @@ interface IOption {
   variadic: string;
 }
 
-interface ISubCommand {
+export interface ISubCommand {
   name: string;
   description: string;
   action: () => void;
 }
 
-interface IArgDetails {
+export interface IArgDetails {
   name: string;
   required: boolean;
   variadic: boolean;
