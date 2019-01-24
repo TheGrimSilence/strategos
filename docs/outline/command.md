@@ -200,3 +200,21 @@ Global scope detected!
          action: [Function] } ] },
   {} ]
 ```
+
+## 1/23/2019, 9:03:06 PM
+
+> Official API 1.0 outline
+
+```typescript
+interface Command {
+  alias: string;
+  argStore: string[] | IArgStore[];
+  description: string;
+  name: string;
+  subCommands: ISubCommand[];
+  /** Log internal processes. */
+  verbose: boolean;
+  /** Set a valid semver version for the command. */
+  version: string;
+}
+```

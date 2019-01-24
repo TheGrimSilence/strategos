@@ -1,4 +1,3 @@
-import chalk from 'chalk';
 import { inspect } from 'util';
 import { BaseCommand, ISubCommand } from './NewBaseCommand';
 
@@ -38,7 +37,7 @@ export class Command extends BaseCommand {
       args = args || [];
       unknown = unknown || [];
       const parsed = this._parseOptions(unknown);
-      self._args.forEach((arg, i) => { });
+      self._args.forEach((arg, i) => {});
       callback.apply(self, args);
     };
 
