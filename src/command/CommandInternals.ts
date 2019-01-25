@@ -50,14 +50,16 @@ export interface ICommand {
 
 export interface IOption {
   description: string;
-  flags: {
-    long: string;
-    short: string;
-  };
+  flags: IOptionFlags;
   option: string;
   isOptional: string;
   isRequired: boolean;
   variadic: string;
+}
+
+export interface IOptionFlags {
+  long: string;
+  short?: string;
 }
 
 export interface ISubCommand {
