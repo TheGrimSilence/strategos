@@ -23,12 +23,12 @@ export enum VerboseStyle {
    */
   Xploration,
   /**
-   * Yarn-based style
+   * npm style.
    *
-   * For example: `{blue info}, {green success}, {red error}`
-   *
+   * For example: `npm {red ERR!} {magenta ${something}}, npm {black.bgYellow WARN}`
+   * Verbs like create, get, etc. should be magenta.
    */
-  Yarn,
+  npm,
   /**
    * Raspberry Pi boot style.
    *
@@ -36,11 +36,18 @@ export enum VerboseStyle {
    */
   RaspPi,
   /**
-   * npm style.
-   *
-   * For example: `npm {red ERR!} {magenta ${something}}, npm {black.bgYellow WARN}`
+   * Ruby on Rails, but with style.
+   * 
+   * For example: `{magenta CREATE}`
    */
-  npm,
+  Rails,
+  /**
+   * Yarn-based style
+   *
+   * For example: `{blue info}, {green success}, {red error}`
+   *
+   */
+  Yarn,
 }
 
 export interface IVerbose {
