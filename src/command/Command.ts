@@ -5,6 +5,7 @@ import {
   ICommand,
   IOption,
   ISubCommand,
+  IOptionFlags,
 } from './CommandInternals';
 import { ICommandAPI } from './ICommand';
 
@@ -22,8 +23,8 @@ class Command extends CommandInternals implements ICommandAPI {
     if (typeof command === 'object') this._commands.push(command);
     if (typeof command === 'string') {
       this._command.name = command;
-      if (desc) this.description(desc);
-      if (fn) this.action(fn);
+      if (typeof desc !== null) this.description(desc);
+      if (typeof fn !== null) this.action(fn);
     }
   }
 
@@ -61,7 +62,7 @@ class Command extends CommandInternals implements ICommandAPI {
   }
 
   public option(
-    flags: string,
+    flags: string | IOptionFlags,
     desc?: string,
     par?: RegExp | (() => void),
     defaultVal?: string,
@@ -106,6 +107,10 @@ class Command extends CommandInternals implements ICommandAPI {
   }
 }
 
-export function command(): Command {
-  return new Command();
+export function command(
+  command?: string | ICommand,
+  desc?: string,
+  fn?: () => void,
+): Command {
+  return new Command(command, desc, fn);
 }
