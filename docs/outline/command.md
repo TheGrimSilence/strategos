@@ -241,3 +241,7 @@ Leaving only these few left before we're done here.
 - subCommands?
 - usage
 - verbose
+
+## 1/30/2019, 5:28:47 PM
+
+I've added `returnManifest?: boolean` to the `end()` to allow the user to get the manifest of that command. User usage I'm unsure of, but for testing, it allows me to compare the expected return to actual return.
