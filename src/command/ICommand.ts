@@ -32,6 +32,10 @@ export interface ICommandAPI {
    */
   options: IOption[] | ((opt: IOption[]) => this);
   /**
+   * Parse the arguments
+   */
+  parse: (argv: string[]) => this;
+  /**
    * Add a sub-command to the command.
    */
   subCommand: (subCmd: string, desc?: string, fn?: () => void) => this;
@@ -52,7 +56,7 @@ export interface ICommandAPI {
   /**
    * Set the command version.
    */
-  version: SemVer | ((vers?: SemVer) => this);
+  version: string | ((vers?: string) => this);
   /**
    * Ends a command chain, building it and pushing it to the list.
    */

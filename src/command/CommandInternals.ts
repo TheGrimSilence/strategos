@@ -1,6 +1,5 @@
 import chalk from 'chalk';
 import { EventEmitter } from 'events';
-import { SemVer } from 'semver';
 import { IVerbose } from './base/verbose';
 /**
  * This allows us to NOT rewrite it every call.
@@ -8,7 +7,9 @@ import { IVerbose } from './base/verbose';
 const commands: ICommand[] = [];
 
 export class CommandInternals extends EventEmitter {
-  protected _command: ICommand;
+  protected _command: ICommand = {};
+  // protected _options: IOption[];
+  // protected _subCommands: ISubCommand[];
   protected _commands: ICommand[] = commands;
   protected constructor() {
     super();
@@ -34,27 +35,32 @@ export class CommandInternals extends EventEmitter {
   }
 
   protected _optionExists(arg: string) {}
+
+  protected _parseCommandArgs(arg: string[]) {}
+
+  protected _parseOptions(argv: string) {}
 }
 
 export interface ICommand {
-  alias: string;
-  args: IArgDetails[];
-  description: string;
-  name: string;
-  options: IOption[];
-  subCommands: ISubCommand[];
-  usage: string;
-  verbose: IVerbose;
-  version: SemVer;
+  alias?: string;
+  args?: IArgDetails[];
+  description?: string;
+  name?: string;
+  options?: IOption[];
+  subCommands?: ISubCommand[];
+  usage?: string;
+  verbose?: IVerbose;
+  version?: string;
 }
 
 export interface IOption {
-  description: string;
-  flags: IOptionFlags;
-  option: string;
-  isOptional: string;
-  isRequired: boolean;
-  variadic: string;
+  bool?: boolean;
+  defaultValue?: string | true;
+  description?: string;
+  flags?: IOptionFlags;
+  isOptional?: boolean;
+  isRequired?: boolean;
+  name?: string;
 }
 
 export interface IOptionFlags {

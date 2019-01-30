@@ -28,7 +28,7 @@ export enum VerboseStyle {
    * For example: `npm {red ERR!} {magenta ${something}}, npm {black.bgYellow WARN}`
    * Verbs like create, get, etc. should be magenta.
    */
-  npm,
+  Npm,
   /**
    * Raspberry Pi boot style.
    *
@@ -37,7 +37,7 @@ export enum VerboseStyle {
   RaspPi,
   /**
    * Ruby on Rails, but with style.
-   * 
+   *
    * For example: `{magenta CREATE}`
    */
   Rails,

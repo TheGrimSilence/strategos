@@ -218,3 +218,26 @@ interface Command {
   version: string;
 }
 ```
+
+## 1/30/2019, 12:15:53 AM
+
+> Update on progress, 46%
+
+I just got `option` working, which means we're almost done with the 1.0 specs. So far we have the following 100% done as far as 1.0 is concerned.
+
+- alias
+- description
+- end
+- option
+- options
+- version
+
+Leaving only these few left before we're done here.
+
+- action
+- help
+- parse
+- subCommand
+- subCommands?
+- usage
+- verbose
