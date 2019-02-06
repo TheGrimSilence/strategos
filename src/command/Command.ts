@@ -41,8 +41,18 @@ class Command extends CommandInternals implements ICommandAPI {
   }
 
   public action(fn: (any: any) => void): this {
-    const listener = (args, unknown) => {
-      // ! parseOPtions
+    const self = this;
+    const listener = (args: any[], unknown: any[]) => {
+      args = args || [];
+      unknown = unknown || [];
+      const parsed = this._parseOptions(unknown);
+      // TODO: Output help if we detect -h or --help
+      if (parsed.unknown.length > 0) {
+        // exit with unknown option
+      }
+      if (self._argStore.length) args[self._argStore.length] = self;
+      else args.push(self);
+      fn.apply(self, args);
     };
 
     this.on(`command:${this._command.name}`, listener);
