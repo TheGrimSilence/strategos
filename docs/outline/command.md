@@ -245,3 +245,125 @@ Leaving only these few left before we're done here.
 ## 1/30/2019, 5:28:47 PM
 
 I've added `returnManifest?: boolean` to the `end()` to allow the user to get the manifest of that command. User usage I'm unsure of, but for testing, it allows me to compare the expected return to actual return.
+
+## 2/6/2019, 8:07:36 PM
+
+Scrapped everything. xHouston is moving to a JSX-style design (hopefully). Alongside this, I'm going based off of how Rails' CLI works, in that, alongside primary commands, each command can have their own subCommands and go even further.
+
+There are a few possible implementations, all examples are based on a Theoretical Rails API:
+
+**React**
+
+```tsx
+class Generate extends xHouston.Command {
+  public render() {
+    return (
+      <>
+        ...
+        <Mailer />
+        <Model />
+        ...
+      </>
+    );
+  }
+}
+
+class Rails extends Command {
+  render() {
+    return (
+
+    )
+  }
+}
+render(<Rails/>)
+```
+
+**React-style**
+
+```ts
+class Generate extends xHouston.Command {}
+
+render(<Generate />);
+```
+
+**Theoretical Returned Object**
+
+This is a small example of what we're hoping to get in return.
+
+```ts
+const api = {
+  name: 'rails',
+  description: 'etc...',
+  commands: [
+    {
+      name: 'console',
+      description: 'etc...',
+      options: [],
+      commands: [],
+    },
+    {
+      name: 'destroy',
+      description: 'etc...',
+      options: [],
+      commands: [],
+    },
+    {
+      name: 'generate',
+      alias: 'g',
+      description: 'etc...',
+      options: [
+        {
+          name: 'General Options',
+          options: [
+            {
+              name: 'help',
+              description: "Print generator's options and usage",
+              long: 'help',
+              short: 'h',
+            },
+            {
+              name: 'pretend',
+              description: 'Run but do not make any changes',
+              long: 'pretend',
+              short: 'p',
+            },
+          ],
+        },
+      ],
+      commands: [
+        {
+          name: 'model',
+          description: 'etc...',
+          options: [
+            {
+              name: 'Options',
+              options: [
+                {
+                  name: 'skipNamespace',
+                  description:
+                    'Skip namespace (affects only isolated applications)',
+                  long: 'skip-namespace',
+                },
+                {
+                  name: 'exampleOfCoercion',
+                  description:
+                    'Skip namespace (affects only isolated applications)',
+                  long: 'example-of-coercion',
+                  action: '[Function: function]',
+                },
+                {
+                  name: 'orm',
+                  description: 'ORM to be invoked',
+                  default: 'active_record',
+                  long: 'orm',
+                  short: 'o',
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+```
