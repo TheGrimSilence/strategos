@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "preserveConstEnums": true,
+    "target": "es5",
+    "declaration": true,
+    "removeComments": true,
+    "baseUrl": ".",
+    "jsx": "react",
+    "jsxFactory": "x",
+    "sourceMap": true,
+    "sourceRoot": ".",
+    "outDir": "../lib"
+  },
+  "files": ["./xhouston.ts"]
+}

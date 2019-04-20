@@ -18,12 +18,15 @@
   },
   "dependencies": {
     "chalk": "^2.4.2",
+    "react": "^16.8.1",
     "semver": "^5.6.0"
   },
   "devDependencies": {
     "@types/commander": "^2.12.2",
     "@types/jest": "^23.3.12",
     "@types/node": "^10.12.17",
+    "@types/react": "^16.8.2",
+    "@types/react-dom": "^16.8.0",
     "@types/semver": "^5.5.0",
     "auto-changelog": "^1.11.0",
     "babel-core": "^6.26.3",
