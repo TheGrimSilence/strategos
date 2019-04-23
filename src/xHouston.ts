@@ -1,6 +1,4 @@
-import chalk from 'chalk';
 import { EventEmitter } from 'events';
-import { inspect } from 'util';
 
 export interface Option {
   /** A function to execute when this option is called. */
@@ -37,20 +35,6 @@ export class Command extends EventEmitter {
   /** End the command setup and parse `process.argv` or any `Array<String>`. */
   public end(args: string[]): void {
     this._args = args.slice(2);
-    console.log(
-      chalk.magenta('Arguments:'),
-      this._args,
-      chalk.magenta('\nName:'),
-      chalk.green(this._name),
-      chalk.magenta('\nOptions:'),
-      this._options
-    );
-    this._subcommands.forEach(i => {
-      console.log(
-        chalk.magenta('\nSubcommand:'),
-        inspect(i, { colors: true, depth: Infinity, sorted: true })
-      );
-    });
   }
   /** Add an option to the command. */
   public option(
