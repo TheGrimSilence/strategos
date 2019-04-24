@@ -11,6 +11,8 @@ interface Option {
   name?: string;
   /** Here we set whether we're dealing with a boolean, option, or variadic */
   type: 'boolean' | 'required' | 'variadic';
+  /** Should the option be inherited? */
+  inherit?: boolean;
 }
 
 interface Configuration {
@@ -21,13 +23,15 @@ interface Configuration {
 export class Command extends EventEmitter {
   /** The arguments store. */
   private _args: string[] = [];
+  /** The configuration for this command. */
   private _config: Configuration = {};
-  /** The name of the command. */
-  private _name = '';
-  /** The options Array. */
+  /** The name of this command. */
+  private _name: string | null = null;
+  /** An array of options. */
   private _options: Option[] = [];
   /** Store a reference to the parent, which can be either a Command or SubCommand. */
   private _parent: Command | null = null;
+  /** An array of subcommands. */
   private _subcommands: Command[] = [];
 
   constructor(name: string) {
@@ -41,12 +45,16 @@ export class Command extends EventEmitter {
       type: 'boolean',
     } as Option);
   }
-  /** Enables a direct configuration for style consistency. */
+  /**
+   * Enables a direct configuration for style consistency.
+   */
   public config(configuration: Configuration): this {
     this._config = configuration;
     return this;
   }
-  /** End the command setup and parse `process.argv` or any `Array<String>`. */
+  /**
+   * End the command setup and parse `process.argv` or any custom string array
+   */
   public end(args: string[]): void {
     this._args = args.slice(2);
     if (this._parent !== null) {
@@ -76,12 +84,17 @@ export class Command extends EventEmitter {
     });
     console.log(`Compiled Options:`, options);
   }
-  /** Add an option to the command. */
+  /**
+   * Add an option
+   *
+   * **Caution**: Setting `inherit: true` with allow the option to be passed to all subcommands.
+   */
   public option(
     name: string | Option,
     description = '',
     type: 'boolean' | 'required' | 'variadic' = 'required',
     alias?: string,
+    inherit?: boolean,
     action?: void | string
   ): this {
     let option: Option;
@@ -94,8 +107,12 @@ export class Command extends EventEmitter {
         type,
       };
 
-      if (action || alias) {
-        Object.assign(option, { action, alias } as Option);
+      if (action || alias || inherit) {
+        Object.assign(option, {
+          action: action ? action : null,
+          alias: alias ? alias : null,
+          inherit: inherit ? inherit : null,
+        } as Option);
       }
     }
 
@@ -103,7 +120,9 @@ export class Command extends EventEmitter {
 
     return this;
   }
-  /** Returns usage information. */
+  /**
+   * Prints helpful information
+   */
   protected returnHelp(): string {
     const usage = `
     ${this._name} [command] [flags]
@@ -115,12 +134,19 @@ export class Command extends EventEmitter {
 
     return usage;
   }
-  /** Add a sub-command to the command. */
+  /**
+   * Add a subcommand
+   *
+   * You must set `inherit` on a command for it to be passed down.
+   */
   public subCommand(cmd: Command): Command {
-    if (this._options.length) {
-      cmd._options = [...cmd._options, ...this._options];
-    }
+    // Pass any inheritable options down
+    this._options.forEach(o => {
+      if (o.inherit) cmd._options.push(o);
+    });
+    // Reference this command as the parent of the new subcommand
     cmd._parent = this;
+    // Push the subcommand to the array
     this._subcommands.push(cmd);
 
     return this;
