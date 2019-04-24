@@ -3,10 +3,13 @@ import { Command } from '../src/xHouston';
 const yarn = new Command('add');
 
 yarn
-  .option(
-    'offline',
-    'trigger an error if any required dependencies are not available in local cache'
-  )
+  .option({
+    alias: 'o',
+    description:
+      'trigger an error if any required dependencies are not available in local cache',
+    name: 'offline',
+    type: 'boolean',
+  })
   .subCommand(new Command('add'))
   .subCommand(new Command('resolve'))
   .subCommand(new Command('list'))
@@ -18,4 +21,5 @@ yarn
       .subCommand(new Command('remove'))
       .subCommand(new Command('list'))
   )
+  .config({ passive: true })
   .end(process.argv);
