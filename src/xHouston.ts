@@ -1,3 +1,4 @@
+import Chalk from 'chalk';
 import { EventEmitter } from 'events';
 
 interface Option {
@@ -18,6 +19,8 @@ interface Option {
 interface Configuration {
   /** Don't error on extraneous arguments. */
   passive?: boolean;
+  /** Make it talk. */
+  verbose?: boolean;
 }
 
 export class Command extends EventEmitter {
@@ -60,29 +63,29 @@ export class Command extends EventEmitter {
     if (this._parent !== null) {
       throw new Error('You may not manually pass arguments to a subcommand');
     }
-    const options: {} = {};
-    console.log(
-      this._parent,
-      this._config,
-      this._args,
-      this._name,
-      this._options
-    );
+    const compiledOptions = {};
     // * Parse the arguments and put them into categories
     this._args.forEach(arg => {
+      // Catch all alias arguments
       if (arg[0] === '-' && arg[1] !== '-') {
         for (const alias of arg) {
           this._options.forEach(option => {
             if (alias === option.alias && option.type === 'boolean') {
-              Object.assign(options, {
+              Object.assign(compiledOptions, {
                 [option.name as string]: true,
               });
             }
           });
         }
       }
+
+      
     });
-    console.log(`Compiled Options:`, options);
+
+    if (this._config.verbose) {
+      console.log(Chalk`{green Raw Arguments}:`, args);
+      console.log(Chalk`{green Compiled Options}:`, compiledOptions);
+    }
   }
   /**
    * Add an option

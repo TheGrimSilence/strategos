@@ -21,5 +21,5 @@ yarn
       .subCommand(new Command('remove'))
       .subCommand(new Command('list'))
   )
-  .config({ passive: true })
+  .config({ passive: true, verbose: true })
   .end(process.argv);
