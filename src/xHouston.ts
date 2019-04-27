@@ -10,8 +10,15 @@ interface Option {
   description?: string;
   /** The name of the option. */
   name?: string;
-  /** Here we set whether we're dealing with a boolean, option, or variadic */
-  type: 'boolean' | 'required' | 'variadic';
+  /**
+   * The type of option we're dealing with, can be any of the following:
+   *
+   * `boolean` - If set, implies a parameter to be `true`.
+   * `optional` - Valuable but optional input
+   * `required` - Implies a parameter must be set, returns an error if not.
+   * `variadic` - Accepts multiple paramters as input.
+   */
+  type: 'boolean' | 'optional' | 'required' | 'variadic';
   /** Should the option be inherited? */
   inherit?: boolean;
 }
@@ -56,35 +63,53 @@ export class Command extends EventEmitter {
     return this;
   }
   /**
-   * End the command setup and parse `process.argv` or any custom string array
+   * End the command setup and parse `process.argv`
+   *
+   * Test against: `yarn global add webpack --offline`
    */
   public end(args: string[]): void {
-    this._args = args.slice(2);
+    // Error if the user tries to use .end() on a subcommand
     if (this._parent !== null) {
       throw new Error('You may not manually pass arguments to a subcommand');
     }
-    const compiledOptions = {};
-    // * Parse the arguments and put them into categories
-    this._args.forEach(arg => {
-      // Catch all alias arguments
-      if (arg[0] === '-' && arg[1] !== '-') {
-        for (const alias of arg) {
-          this._options.forEach(option => {
-            if (alias === option.alias && option.type === 'boolean') {
-              Object.assign(compiledOptions, {
-                [option.name as string]: true,
-              });
-            }
-          });
-        }
+    // Assign the arguments incase we need them
+    this._args = args;
+
+    const compiledOptions: { [key: string]: string | boolean } = {};
+
+    // TODO: If the first arg is not a command, help, or version, Error.
+
+    for (let i = 0; i < args.length; i++) {
+      const arg = args[i];
+      const nextArg = args[i + 1];
+
+      if (this._config.verbose) {
+        console.log(
+          Chalk`{yellow Iteration}: ${i.toString()}; {yellow Argument}: ${arg};`
+        );
       }
 
-      
-    });
+      // Isolate any options that have inputs
+      this._options.forEach(option => {
+        const isOption = arg.startsWith('--');
+        const isValid = option.name === arg.slice(2);
+        const isBool = option.type === 'boolean';
+
+        if (isOption && isValid && isBool) {
+          console.log(arg, true);
+          compiledOptions[arg.slice(2)] = true;
+        } else if (isOption && isValid && !isBool) {
+          console.log(arg, nextArg);
+          compiledOptions[arg.slice(2)] = nextArg;
+        } else if (!isOption && arg.startsWith('-')) {
+          console.log(arg);
+        }
+      });
+    }
 
     if (this._config.verbose) {
-      console.log(Chalk`{green Raw Arguments}:`, args);
-      console.log(Chalk`{green Compiled Options}:`, compiledOptions);
+      console.log(Chalk`{green Raw Arguments}:\n`, this._args);
+      console.log(Chalk`{green Compiled Options}:\n`, compiledOptions, '\n');
     }
   }
   /**
@@ -120,6 +145,8 @@ export class Command extends EventEmitter {
     }
 
     this._options.push(option);
+
+    // this.on(`option:${name}`, val => {});
 
     return this;
   }
