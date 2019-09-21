@@ -1,7 +1,0 @@
-# folders
-node_modules/
-lib/
-temp/
-
-# files
-yarn-error.log
