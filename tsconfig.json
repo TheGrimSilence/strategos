@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es6",
+    "noUnusedLocals": true,
+    "removeComments": true,
+    "baseUrl": "src",
+    "outDir": "lib",
+    "resolveJsonModule": true
+  }
+}
