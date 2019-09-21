@@ -1,8 +1,0 @@
-{
-  "extends": "@thegrimsilence/tsconfig",
-  "compilerOptions": {
-    "outDir": "./dist/",
-    "incremental": true,
-    "baseUrl": "."
-  }
-}

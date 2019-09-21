@@ -1,6 +1,0 @@
-{
-  "extends": "@thegrimsilence/tslint",
-  "rules":{
-    "member-access":[true, "check-parameter-property"]
-  }
-}
