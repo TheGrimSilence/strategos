@@ -1,6 +1,6 @@
 {
   "name": "@xploration/houston",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Your personal command center!",
   "repository": "https://github.com/XplorationByAdrian/houston.git",
   "author": "Adrian (Grim) Roach <silencegrim@gmail.com>",
@@ -9,8 +9,7 @@
   "preferGlobal": true,
   "scripts": {
     "build": "yarn clean && webpack --config config/webpack.config.ts",
-    "clean": "rimraf lib",
-    "prepublishOnly": "yarn build && auto-changelog -p && git add CHANGELOG.md"
+    "clean": "rimraf lib"
   },
   "main": "./lib/houston.js",
   "devDependencies": {
@@ -22,6 +21,7 @@
     "webpack": "^4.40.2",
     "webpack-cli": "^3.3.8"
   },
+  "private": false,
   "dependencies": {
     "chalk": "^2.4.2"
   }
