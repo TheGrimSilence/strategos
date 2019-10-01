@@ -1,6 +1,6 @@
 {
-  "name": "@xploration/houston",
-  "version": "1.0.3",
+  "name": "xba-houston",
+  "version": "0.1.4",
   "description": "Your personal command center!",
   "repository": "https://github.com/XplorationByAdrian/houston.git",
   "author": "Adrian (Grim) Roach <silencegrim@gmail.com>",
