@@ -1,6 +1,6 @@
 {
   "name": "xba-houston",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Your personal command center!",
   "repository": "https://github.com/XplorationByAdrian/houston.git",
   "author": "Adrian (Grim) Roach <silencegrim@gmail.com>",
@@ -14,7 +14,7 @@
     "types": "yarn types:build",
     "clean": "rimraf lib"
   },
-  "main": "./src/houston.js",
+  "main": "./lib/houston.js",
   "devDependencies": {
     "@types/webpack": "^4.39.1",
     "awesome-typescript-loader": "^5.2.1",
