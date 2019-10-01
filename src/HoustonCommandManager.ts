@@ -8,7 +8,6 @@ export class HoustonCommandManager extends CommandHandler {
     super();
     this.houston = houston;
     this.registerCommand(new CommandHelp());
-    this.getCommands();
   }
 
   protected getHouston(): Houston {

@@ -7,6 +7,8 @@
     "removeComments": true,
     "baseUrl": "src",
     "outDir": "lib",
+    "esModuleInterop": true,
+    "declaration": true,
     "resolveJsonModule": true
   }
 }

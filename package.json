@@ -7,20 +7,31 @@
   "license": "MIT",
   "company": "Xploration By Adrian",
   "preferGlobal": true,
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "scripts": {
-    "build": "yarn clean && webpack --config config/webpack.config.ts",
+    "build": "yarn clean && webpack --config config/webpack.config.ts && yarn types && echo REMEMBER TO REMOVE IMPORTS IN HOUSTON.D.TS",
+    "types:build": "tsc --declaration --outDir . --emitDeclarationOnly && dts-bundle --configJson ./dts-bundle.json",
+    "types:mv": "mv ./src/houston.d.ts ./lib/",
+    "types": "yarn types:build",
     "clean": "rimraf lib"
   },
   "main": "./lib/houston.js",
   "devDependencies": {
+    "@types/copy-webpack-plugin": "^5.0.0",
+    "@types/dts-bundle": "^0.0.31",
     "@types/webpack": "^4.39.1",
     "awesome-typescript-loader": "^5.2.1",
+    "copy-webpack-plugin": "^5.0.4",
+    "dts-bundle": "^0.7.3",
     "ts-node": "^8.4.1",
     "tsconfig-paths-webpack-plugin": "^3.2.0",
     "typescript": "^3.6.3",
     "webpack": "^4.40.2",
     "webpack-cli": "^3.3.8"
   },
+  "types": "lib/src",
   "private": false,
   "dependencies": {
     "chalk": "^2.4.2"

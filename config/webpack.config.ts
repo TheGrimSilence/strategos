@@ -1,11 +1,11 @@
-import { Configuration } from 'webpack';
 import * as path from 'path';
-import { outDir, appSrc, appNodeModules } from '../config/paths';
+import { Configuration } from 'webpack';
+import { appNodeModules, appSrc, outDir } from '../config/paths';
 
 const config: Configuration = {
   entry: path.resolve(appSrc, 'houston.ts'),
   mode: 'development',
-  target: 'async-node',
+  target: 'node',
   output: {
     path: outDir,
     filename: 'houston.js',
@@ -22,7 +22,7 @@ const config: Configuration = {
         exclude: /node_modules/,
       },
     ],
-  },
+  }
 };
 
 export default config;

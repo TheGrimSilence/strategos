@@ -1,5 +1,4 @@
 import Chalk from 'chalk';
-import { CommandEcho } from 'CommandEcho';
 import { HoustonCommandManager } from 'HoustonCommandManager';
 import { ICommand } from 'ICommand';
 import { ICommandManager } from 'ICommandManager';
@@ -14,7 +13,6 @@ export class Houston {
    * @param commands pass in all of your commands `[new CommandEcho(), new CommandHelp()]`
    */
   public constructor(args: string[], commands: ICommand[]) {
-    console.log(args);
     this.commandManager = this.createCommandManager();
 
     if (commands.length > 0) {
@@ -33,5 +31,3 @@ export class Houston {
     return new HoustonCommandManager(this);
   }
 }
-
-new Houston(process.argv.slice(2), [new CommandEcho()]);

@@ -1,0 +1,6 @@
+node_modules/
+config/
+src/
+tsconfig.json/
+yarn.lock/
+.gitignore

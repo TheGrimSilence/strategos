@@ -6,14 +6,15 @@ export class CommandHandler {
     ICommand
   >();
   private readonly commandSet: Set<ICommand> = new Set<ICommand>();
-
+  /**
+   * Execute the command
+   * @param rawCommand 
+   */
   public executeCommand(rawCommand: string[]): number {
     const s = rawCommand[0];
     rawCommand.shift();
     const icommand: ICommand = this.commandMap.get(s);
     let i = 0;
-    console.log(`executeCommand:Executing`);
-    console.log(`executeCommand:icommand.getName -> ${icommand.getName()}`);
 
     try {
       if (icommand === undefined) {
@@ -28,7 +29,11 @@ export class CommandHandler {
     }
     return i;
   }
-
+  /**
+   * Ensure we can actually execute a command
+   * @param args the arguments handed down from instantiation
+   * @param command the command to execute
+   */
   protected tryExecute(args: string[], command: ICommand): boolean {
     try {
       command.execute(args);
@@ -40,7 +45,9 @@ export class CommandHandler {
 
     return false;
   }
-
+  /**
+   * Working on tab completion
+   */
   public getTabCompletions(): Array<string> {
     return [];
   }
@@ -62,7 +69,9 @@ export class CommandHandler {
 
     return command;
   }
-
+  /**
+   * Returns a map of all commands. Used for manual debugging.
+   */
   public getCommands(): Map<string, ICommand> {
     console.log(this.commandMap);
     return this.commandMap;

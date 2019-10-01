@@ -1,0 +1,8 @@
+{
+  "name": "houston",
+  "main": "./src/**/*.d.ts",
+  "removeSource": "true",
+  "out": "../lib/houston.d.ts",
+  "verbose": true,
+  "outputAsModuleFolder": true
+}
