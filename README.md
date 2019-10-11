@@ -4,6 +4,12 @@ Your personal command center!
 
 Houston is a new way to build command-line applications without having to use ugly method chaining.
 
+## Install
+
+```bash
+yarn add xba-houston
+```
+
 ## Usage
 
 Creating a command is extremely simple. Here's a simple echo command:
@@ -32,5 +38,7 @@ You can then get started by creating a Houston instance and passing in any strin
 Then pass in an array of your commands. I'm working on instantiatiing commands via a directory and naming scheme as well.
 
 ```typescript
+import { Houston } from 'xba-houston';
+
 new Houston(process.argv.slice(2), [new CommandEcho(), new CommandAdd()]);
 ```
