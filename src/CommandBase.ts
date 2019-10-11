@@ -1,4 +1,4 @@
-import { ICommand } from 'ICommand';
+import { ICommand } from './ICommand';
 
 export abstract class CommandBase implements ICommand {
   public version?: string;

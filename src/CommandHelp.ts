@@ -1,5 +1,5 @@
-import { CommandBase } from 'CommandBase';
-import { ICommand } from 'ICommand';
+import { CommandBase } from './CommandBase';
+import { ICommand } from './ICommand';
 
 export class CommandHelp extends CommandBase implements ICommand {
   public getName(): string {
@@ -20,7 +20,7 @@ export class CommandHelp extends CommandBase implements ICommand {
 
   public execute(args) {
     console.log(`Successfully reached execution stage`);
-    
+
     console.log(args);
   }
 }

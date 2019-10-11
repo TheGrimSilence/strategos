@@ -1,4 +1,4 @@
-import { ICommand } from 'ICommand';
+import { ICommand } from './ICommand';
 
 export class CommandHandler {
   private readonly commandMap: Map<string, ICommand> = new Map<
@@ -8,7 +8,7 @@ export class CommandHandler {
   private readonly commandSet: Set<ICommand> = new Set<ICommand>();
   /**
    * Execute the command
-   * @param rawCommand 
+   * @param rawCommand
    */
   public executeCommand(rawCommand: string[]): number {
     const s = rawCommand[0];

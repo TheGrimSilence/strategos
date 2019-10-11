@@ -2,13 +2,10 @@
   "compilerOptions": {
     "module": "commonjs",
     "moduleResolution": "node",
-    "target": "es6",
+    "target": "esnext",
     "noUnusedLocals": true,
     "removeComments": true,
-    "baseUrl": "src",
     "outDir": "lib",
-    "esModuleInterop": true,
-    "declaration": true,
-    "resolveJsonModule": true
+    "declaration": true
   }
 }

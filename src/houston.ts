@@ -1,9 +1,6 @@
-import Chalk from 'chalk';
-import { HoustonCommandManager } from 'HoustonCommandManager';
-import { ICommand } from 'ICommand';
-import { ICommandManager } from 'ICommandManager';
-
-console.log(Chalk`{cyan Hello}, Houston!`);
+import { ICommandManager } from './ICommandManager';
+import { ICommand } from './ICommand';
+import { HoustonCommandManager } from './HoustonCommandManager';
 
 export class Houston {
   public readonly commandManager: ICommandManager;
@@ -12,14 +9,16 @@ export class Houston {
    * @param args pass in `process.argv.slice(2)` or any string array for testing.
    * @param commands pass in all of your commands `[new CommandEcho(), new CommandHelp()]`
    */
-  public constructor(args: string[], commands: ICommand[]) {
+  public constructor(args: string[], commands?: ICommand[]) {
     this.commandManager = this.createCommandManager();
+    console.log(commands);
 
     if (commands.length > 0) {
       commands.forEach(command => {
         this.getCommandManager().registerCommand(command);
       });
     }
+
     this.getCommandManager().executeCommand(args);
   }
 

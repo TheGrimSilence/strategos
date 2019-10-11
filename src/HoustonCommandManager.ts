@@ -1,6 +1,6 @@
-import { CommandHandler } from 'CommandHandler';
-import { CommandHelp } from 'CommandHelp';
-import { Houston } from 'houston';
+import { CommandHandler } from './CommandHandler';
+import { Houston } from './houston';
+import { CommandHelp } from './CommandHelp';
 
 export class HoustonCommandManager extends CommandHandler {
   private readonly houston: Houston;
