@@ -4,19 +4,20 @@ export interface ICommandManager {
   /**
    * Attempts to execute a command
    */
-  executeCommand(rawCommand);
+  executeCommand(rawCommand: string[]): void;
   // TODO implement tab completion, or at least support it in embedded terminals
   /**
    * ! Mark for possible removal
    */
-  getTabCompletions?();
+  // getTabCompletions?();
   /**
    * ! Mark for possible removal
    */
-  getPossibleCommands?();
+  // getPossibleCommands?();
   /**
    * ! Mark for possible removal
    */
-  getCommands();
-  registerCommand(command: ICommand);
+  getCommands(): Map<string, ICommand>;
+
+  registerCommand(command: ICommand): ICommand;
 }

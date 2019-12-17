@@ -13,7 +13,7 @@ export class CommandHandler {
   public executeCommand(rawCommand: string[]): number {
     const s = rawCommand[0];
     rawCommand.shift();
-    const icommand: ICommand = this.commandMap.get(s);
+    const icommand: ICommand = this.commandMap.get(s)!;
     let i = 0;
 
     try {
@@ -21,7 +21,7 @@ export class CommandHandler {
         // TODO command not found exception
       } else {
         if (this.tryExecute(rawCommand, icommand)) {
-          ++i;
+          i += 1;
         }
       }
     } catch (commandException) {
@@ -30,25 +30,9 @@ export class CommandHandler {
     return i;
   }
   /**
-   * Ensure we can actually execute a command
-   * @param args the arguments handed down from instantiation
-   * @param command the command to execute
-   */
-  protected tryExecute(args: string[], command: ICommand): boolean {
-    try {
-      command.execute(args);
-
-      return true;
-    } catch (error) {
-      console.log(error.message);
-    }
-
-    return false;
-  }
-  /**
    * Working on tab completion
    */
-  public getTabCompletions(): Array<string> {
+  public getTabCompletions(): string[] {
     return [];
   }
 
@@ -56,13 +40,13 @@ export class CommandHandler {
    * Adds the command and any aliases it has to the internal map of available commands
    */
   public registerCommand(command: ICommand): ICommand {
-    this.commandMap.set(command.getName(), command);
+    this.commandMap.set(command.getName!(), command);
     this.commandSet.add(command);
 
-    for (let alias of command.getAliases()) {
-      const icommand: ICommand = this.commandMap.get(alias);
+    for (const alias of command.getAliases()) {
+      const icommand: ICommand = this.commandMap.get(alias)!;
 
-      if (icommand === undefined || !icommand.getName().match(alias)) {
+      if (icommand === undefined || !icommand.getName!().match(alias)) {
         this.commandMap.set(alias, command);
       }
     }
@@ -75,5 +59,21 @@ export class CommandHandler {
   public getCommands(): Map<string, ICommand> {
     console.log(this.commandMap);
     return this.commandMap;
+  }
+  /**
+   * Ensure we can actually execute a command
+   * @param args the arguments handed down from instantiation
+   * @param command the command to execute
+   */
+  protected tryExecute(args: string[], command: ICommand): boolean {
+    try {
+      command.execute!(args);
+
+      return true;
+    } catch (error) {
+      console.log(error.message);
+    }
+
+    return false;
   }
 }

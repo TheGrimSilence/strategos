@@ -1,5 +1,9 @@
 export interface ICommand {
   /**
+   * The version of the command.
+   */
+  version?: string;
+  /**
    * Gets the name of the command.
    */
   getName?(): string;
@@ -11,10 +15,6 @@ export interface ICommand {
    * Sets the alias of the command.
    */
   getAliases(): string[];
-  /**
-   * The version of the command.
-   */
-  version?: string;
   /**
    * Callback for when the command is executed
    */

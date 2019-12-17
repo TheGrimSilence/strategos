@@ -1,9 +1,9 @@
 import { ICommand } from './ICommand';
 
-export abstract class CommandBase implements ICommand {
+export class CommandBase implements ICommand {
   public version?: string;
 
-  public getAliases(): Array<string> {
+  public getAliases(): string[] {
     return new Array<string>();
   }
 }

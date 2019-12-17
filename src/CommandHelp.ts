@@ -18,7 +18,7 @@ export class CommandHelp extends CommandBase implements ICommand {
     return '1.0.0';
   }
 
-  public execute(args) {
+  public execute(args: string[]) {
     console.log(`Successfully reached execution stage`);
 
     console.log(args);

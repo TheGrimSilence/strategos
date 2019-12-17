@@ -1,8 +1,8 @@
-import { ICommandManager } from './ICommandManager';
 import { ICommand } from './ICommand';
-import { HoustonCommandManager } from './HoustonCommandManager';
+import { ICommandManager } from './ICommandManager';
+import { StrategosCommandManager } from './StrategosCommandManager';
 
-export class Houston {
+export class Strategos {
   public readonly commandManager: ICommandManager;
   /**
    *
@@ -13,8 +13,8 @@ export class Houston {
     this.commandManager = this.createCommandManager();
     console.log(commands);
 
-    if (commands.length > 0) {
-      commands.forEach(command => {
+    if (commands!.length > 0) {
+      commands!.forEach(command => {
         this.getCommandManager().registerCommand(command);
       });
     }
@@ -26,7 +26,7 @@ export class Houston {
     return this.commandManager;
   }
 
-  public createCommandManager(): HoustonCommandManager {
-    return new HoustonCommandManager(this);
+  public createCommandManager(): StrategosCommandManager {
+    return new StrategosCommandManager(this);
   }
 }
