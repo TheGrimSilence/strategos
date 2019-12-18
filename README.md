@@ -18,7 +18,7 @@ Creating a command is extremely simple. Here's a simple echo command:
 export class CommandEcho extends CommandBase implements ICommand {
   public getName(): string {
     return "echo";
-  } 
+  }
 
   public getAliases(): string[] {
     return ["e"];
@@ -29,7 +29,7 @@ export class CommandEcho extends CommandBase implements ICommand {
   }
 
   public execute(args: string[]): void {
-    console.log(args[0])
+    console.log(args[0]);
   }
 }
 ```
@@ -38,13 +38,9 @@ You can then get started by creating a Strategos instance and passing in any str
 Then pass in an array of your commands. I'm working on instantiatiing commands via a directory and naming scheme as well.
 
 ```typescript
-import { Strategos } from 'strategos';
+import { Strategos } from "strategos";
 
 new Strategos(process.argv.slice(2), [new CommandEcho(), new CommandAdd()]);
 ```
 
-It's as simple as that. Just run it from there:
-
-```bash
-
-```
+It's as simple as that
