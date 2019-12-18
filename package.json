@@ -1,7 +1,7 @@
 {
   "name": "strategos",
   "version": "1.0.0",
-  "description": "Your personal command center!",
+  "description": "A TypeScript focused solution for command-line applications.",
   "main": "index.js",
   "scripts": {
     "build": "yarn clean && tsc -p ./tsconfig.json",
@@ -14,7 +14,6 @@
     "package": "ts-node ./script/package.ts",
     "release": "git checkout master && git pull origin master && standard version && ts-node ./script/updatePackageVersion.ts",
     "ship": "git push --follow-tags origin master && cd ./dist && yarn publish",
-    "": "",
     "test": "jest"
   },
   "private": true,
