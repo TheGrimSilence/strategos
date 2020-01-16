@@ -1,6 +1,6 @@
 # Strategos
 
-Your personal command center!
+A TypeScript focused solution for command-line applications.
 
 Strategos is a new way to build command-line applications. Build with some class, and skip the method chaining.
 
@@ -43,4 +43,4 @@ import { Strategos } from "strategos";
 new Strategos(process.argv.slice(2), [new CommandEcho(), new CommandAdd()]);
 ```
 
-It's as simple as that
+It's as simple as that.
