@@ -5,15 +5,6 @@
   "main": "index.js",
   "scripts": {
     "build": "yarn clean && tsc -p ./tsconfig.json",
-    "build:post": "yarn package",
-    "clean": "rimraf ./dist",
-    "prerelease": "yarn build",
-    "pretest": "yarn clean && yarn build",
-    "lint": "tslint -p tslint.json",
-    "lint:fix": "yarn lint --fix",
-    "package": "ts-node ./script/package.ts",
-    "release": "git checkout master && git pull origin master && standard version && ts-node ./script/updatePackageVersion.ts",
-    "ship": "git push --follow-tags origin master && cd ./dist && yarn publish",
     "test": "jest"
   },
   "private": true,
@@ -36,12 +27,14 @@
     "cli"
   ],
   "devDependencies": {
+    "@types/jest": "^24.9.0",
     "@types/node": "^12.12.11",
     "coveralls": "^3.0.8",
     "get-root-path": "^2.0.2",
     "jest": "^24.9.0",
     "jest-helpers": "^3.1.0",
     "rimraf": "^3.0.0",
+    "ts-jest": "^24.3.0",
     "ts-loader": "^6.2.0",
     "ts-node": "^8.5.2",
     "tslint": "^5.20.1",
