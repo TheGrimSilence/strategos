@@ -1,13 +1,13 @@
 {
   "name": "strategos",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "A TypeScript focused solution for command-line applications.",
   "main": "index.js",
   "scripts": {
     "build": "yarn clean && tsc -p ./tsconfig.json",
     "test": "jest"
   },
-  "private": true,
+  "private": false,
   "repository": {
     "type": "git",
     "url": "https://github.com/TheGrimSilence/strategos.git"
