@@ -1,79 +1,88 @@
-import { ICommand } from './ICommand';
+import { ICommand } from './ICommand'
+import { AbstractCommand } from './CommandBase'
 
 export class CommandHandler {
-  private readonly commandMap: Map<string, ICommand> = new Map<
+  private readonly commandMap: Map<string, AbstractCommand> = new Map<
     string,
-    ICommand
+    AbstractCommand
   >();
-  private readonly commandSet: Set<ICommand> = new Set<ICommand>();
+  private readonly commandSet: Set<AbstractCommand> = new Set<AbstractCommand>();
+
   /**
    * Execute the command
    * @param rawCommand
    */
   public executeCommand(rawCommand: string[]): number {
-    const s = rawCommand[0];
-    rawCommand.shift();
-    const icommand: ICommand = this.commandMap.get(s)!;
-    let i = 0;
+    const s = rawCommand[0]
+    rawCommand.shift()
+    const icommand: AbstractCommand = this.commandMap.get(s)!
+    let i = 0
 
     try {
       if (icommand === undefined) {
         // TODO command not found exception
       } else {
         if (this.tryExecute(rawCommand, icommand)) {
-          i += 1;
+          i += 1
         }
       }
     } catch (commandException) {
-      console.log(commandException.message);
+      console.log(commandException.message)
     }
-    return i;
+    return i
   }
+
   /**
    * Working on tab completion
    */
+
   public getTabCompletions(): string[] {
-    return [];
+    return []
   }
 
   /**
    * Adds the command and any aliases it has to the internal map of available commands
    */
-  public registerCommand(command: ICommand): ICommand {
-    this.commandMap.set(command.getName!(), command);
-    this.commandSet.add(command);
+  public registerCommand(command: AbstractCommand): AbstractCommand {
+    this.commandMap.set(command.getName, command)
+    this.commandSet.add(command)
 
-    for (const alias of command.getAliases()) {
-      const icommand: ICommand = this.commandMap.get(alias)!;
+    for (const alias of command.getAlias) {
+      const icommand: AbstractCommand = this.commandMap.get(alias)!
 
-      if (icommand === undefined || !icommand.getName!().match(alias)) {
-        this.commandMap.set(alias, command);
+      if (icommand === undefined || icommand.getName.match(alias)) {
+        this.commandMap.set(alias, command)
       }
     }
 
-    return command;
+    this.commandMap.set(command.getAlias, command)
+
+    return command
   }
+
   /**
    * Returns a map of all commands. Used for manual debugging.
    */
-  public getCommands(): Map<string, ICommand> {
-    console.log(this.commandMap);
-    return this.commandMap;
+  public getCommands(): Map<string, AbstractCommand> {
+    console.log(this.commandMap)
+
+    return this.commandMap
   }
+
   /**
    * Ensure we can actually execute a command
    * @param args the arguments handed down from instantiation
    * @param command the command to execute
    */
-  protected tryExecute(args: string[], command: ICommand): boolean {
+  protected tryExecute(args: string[], command: AbstractCommand): boolean {
     try {
-      command.execute!(args);
+      command.execute!(args)
 
-      return true;
+      return true
     } catch (error) {
-      console.log(error.message);
+      console.log(error.message)
     }
 
-    return false;
+    return false
   }
 }

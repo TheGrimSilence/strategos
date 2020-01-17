@@ -1,13 +1,24 @@
-import { Strategos, CommandBase, ICommand } from '../'
+import { Strategos, AbstractCommand } from '../'
 
+class Echo extends AbstractCommand {
+  readonly _name: string
+  readonly _alias: string
+  readonly _version: string
 
-class Echo extends CommandBase implements ICommand {
-  getName() {
-    return 'echo'
+  constructor() {
+    super()
+
+    this._name = 'echo'
+    this._alias = 'e'
+    this._version = '1.0.0'
   }
 
-  getAliases() {
-    return ['e']
+  get getName() {
+    return this._name
+  }
+
+  get getAlias() {
+    return this._alias
   }
 
   getUsage() {

@@ -1,0 +1,4 @@
+- Finish tests
+  - Get Strategos to work with tests effectively.
+- Work on refining usage.
+- Work on subcommands

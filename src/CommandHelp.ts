@@ -1,26 +1,33 @@
-import { CommandBase } from './CommandBase';
-import { ICommand } from './ICommand';
+import { AbstractCommand } from './CommandBase'
 
-export class CommandHelp extends CommandBase implements ICommand {
-  public getName(): string {
-    return 'help';
-  }
+export class CommandHelp extends AbstractCommand {
+  readonly _name: string
+  readonly _alias: string
+  readonly _version: string
 
-  public getAliases(): string[] {
-    return ['?', 'h'];
+  constructor() {
+    super()
+
+    this._name = 'help'
+    this._alias = 'h'
+    this._version = '1.0.0'
   }
 
   public getUsage(): string {
-    return 'help [command]';
+    return 'help [command]'
   }
 
-  public getVersion(): string {
-    return '1.0.0';
+  get getAlias(): string {
+    return this._alias
+  }
+
+  get getName(): string {
+    return this._name
   }
 
   public execute(args: string[]) {
-    console.log(`Successfully reached execution stage`);
+    console.log(`Successfully reached execution stage`)
 
-    console.log(args);
+    console.log(args)
   }
 }

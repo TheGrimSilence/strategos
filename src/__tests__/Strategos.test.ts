@@ -6,10 +6,10 @@ test('Instantiates without errors', () => {
   expect(new Strategos(['help'], []))
 })
 
-test('"help" is enabled', async () => {
-  let result: any = await cli(['h'], '.')
-  expect(result.code).toBe(0)
-})
+// test('"help" is enabled', async () => {
+//   let result: any = await cli(['h'], '.')
+//   expect(result.code).toBe(0)
+// })
 
 function cli(args: string[], cwd: string) {
   return new Promise(resolve => {

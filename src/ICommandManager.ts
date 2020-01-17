@@ -1,10 +1,10 @@
-import { ICommand } from './ICommand';
+import { AbstractCommand } from './CommandBase'
 
 export interface ICommandManager {
   /**
    * Attempts to execute a command
    */
-  executeCommand(rawCommand: string[]): void;
+  executeCommand(rawCommand: string[]): void
   // TODO implement tab completion, or at least support it in embedded terminals
   /**
    * ! Mark for possible removal
@@ -17,7 +17,7 @@ export interface ICommandManager {
   /**
    * ! Mark for possible removal
    */
-  getCommands(): Map<string, ICommand>;
+  getCommands(): Map<string, AbstractCommand>
 
-  registerCommand(command: ICommand): ICommand;
+  registerCommand(command: AbstractCommand): AbstractCommand
 }

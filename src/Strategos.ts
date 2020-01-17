@@ -1,32 +1,33 @@
-import { ICommand } from './ICommand';
-import { ICommandManager } from './ICommandManager';
-import { StrategosCommandManager } from './StrategosCommandManager';
+import { ICommand } from './ICommand'
+import { ICommandManager } from './ICommandManager'
+import { StrategosCommandManager } from './StrategosCommandManager'
+import { AbstractCommand } from './CommandBase'
 
 export class Strategos {
-  public readonly commandManager: ICommandManager;
+  public readonly commandManager: ICommandManager
+
   /**
-   *
+   * A new kind of command-line interface tool.
    * @param args pass in `process.argv.slice(2)` or any string array for testing.
-   * @param commands pass in all of your commands `[new CommandEcho(), new CommandHelp()]`
+   * @param commands pass in commands to be added.
    */
-  public constructor(args: string[], commands?: ICommand[]) {
-    this.commandManager = this.createCommandManager();
-    console.log(commands);
+  public constructor(args: string[], commands?: AbstractCommand[]) {
+    this.commandManager = this.createCommandManager()
 
     if (commands!.length > 0) {
       commands!.forEach(command => {
-        this.getCommandManager().registerCommand(command);
-      });
+        this.getCommandManager().registerCommand(command)
+      })
     }
 
-    this.getCommandManager().executeCommand(args);
+    this.getCommandManager().executeCommand(args)
   }
 
   public getCommandManager(): ICommandManager {
-    return this.commandManager;
+    return this.commandManager
   }
 
   public createCommandManager(): StrategosCommandManager {
-    return new StrategosCommandManager(this);
+    return new StrategosCommandManager(this)
   }
 }
