@@ -29,20 +29,12 @@
   "devDependencies": {
     "@types/jest": "^24.9.0",
     "@types/node": "^12.12.11",
-    "@types/semver": "^6.2.0",
-    "coveralls": "^3.0.8",
-    "get-root-path": "^2.0.2",
     "jest": "^24.9.0",
-    "jest-helpers": "^3.1.0",
-    "rimraf": "^3.0.0",
     "ts-jest": "^24.3.0",
-    "ts-loader": "^6.2.0",
-    "ts-node": "^8.5.2",
     "tslint": "^5.20.1",
     "typescript": "^3.6.3"
   },
   "dependencies": {
-    "chalk": "^3.0.0",
-    "semver": "^7.1.1"
+    "chalk": "^3.0.0"
   }
 }
