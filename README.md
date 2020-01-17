@@ -15,21 +15,33 @@ yarn add strategos
 Creating a command is extremely simple. Here's a simple echo command:
 
 ```typescript
-export class CommandEcho extends CommandBase implements ICommand {
-  public getName(): string {
-    return "echo";
+class CommandEcho extends AbstractCommand {
+  readonly _name: string
+  readonly _alias: string
+  readonly _version: string
+
+  constructor() {
+    super()
+
+    this._name = 'echo'
+    this._alias = 'e'
+    this._version = '1.0.0'
   }
 
-  public getAliases(): string[] {
-    return ["e"];
+  get getName() {
+    return this._name
   }
 
-  public getUsage(): string {
-    return "echo <your_string>";
+  get getAlias() {
+    return this._alias
   }
 
-  public execute(args: string[]): void {
-    console.log(args[0]);
+  getUsage() {
+    return 'echo <your_string>'
+  }
+
+  execute(args: string[]) {
+    console.log(args[0])
   }
 }
 ```
@@ -40,7 +52,7 @@ Then pass in an array of your commands. I'm working on instantiatiing commands v
 ```typescript
 import { Strategos } from "strategos";
 
-new Strategos(process.argv.slice(2), [new CommandEcho(), new CommandAdd()]);
+new Strategos(process.argv.slice(2), [new CommandEcho()]);
 ```
 
 It's as simple as that.

@@ -1,6 +1,6 @@
 import { Strategos, AbstractCommand } from '../'
 
-class Echo extends AbstractCommand {
+class CommandEcho extends AbstractCommand {
   readonly _name: string
   readonly _alias: string
   readonly _version: string
@@ -30,4 +30,4 @@ class Echo extends AbstractCommand {
   }
 }
 
-new Strategos(process.argv.slice(2), [new Echo()])
+new Strategos(process.argv.slice(2), [new CommandEcho()])
