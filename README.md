@@ -15,7 +15,7 @@ yarn add strategos
 Creating a command is extremely simple. Here's a simple echo command:
 
 ```typescript
-class CommandEcho extends AbstractCommand {
+class CommandEcho extends CommandBase {
   readonly _name: string
   readonly _alias: string
   readonly _version: string
@@ -26,14 +26,6 @@ class CommandEcho extends AbstractCommand {
     this._name = 'echo'
     this._alias = 'e'
     this._version = '1.0.0'
-  }
-
-  get getName() {
-    return this._name
-  }
-
-  get getAlias() {
-    return this._alias
   }
 
   getUsage() {

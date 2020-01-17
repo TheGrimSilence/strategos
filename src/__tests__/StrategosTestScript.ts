@@ -13,14 +13,6 @@ class CommandEcho extends AbstractCommand {
     this._version = '1.0.0'
   }
 
-  get getName() {
-    return this._name
-  }
-
-  get getAlias() {
-    return this._alias
-  }
-
   getUsage() {
     return 'echo <your_string>'
   }

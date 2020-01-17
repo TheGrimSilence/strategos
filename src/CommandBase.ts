@@ -1,4 +1,4 @@
-export abstract class AbstractCommand {
+export abstract class CommandBase {
   abstract readonly _name: string
   abstract readonly _alias: string
   protected readonly _version?: string
@@ -8,9 +8,14 @@ export abstract class AbstractCommand {
   }
 
   /** Return the alias for the given command. */
-  abstract get getAlias(): string 
+  get getAlias(): string {
+    return this._alias
+  }
 
-  abstract get getName(): string
+  /** Return the name of the given command. */
+  get getName(): string {
+    return this._name
+  }
 
   abstract execute(args: string[]): void
 

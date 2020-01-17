@@ -1,6 +1,6 @@
-import { AbstractCommand } from './CommandBase'
+import { CommandBase } from './CommandBase'
 
-export class CommandHelp extends AbstractCommand {
+export class CommandHelp extends CommandBase {
   readonly _name: string
   readonly _alias: string
   readonly _version: string
@@ -15,14 +15,6 @@ export class CommandHelp extends AbstractCommand {
 
   public getUsage(): string {
     return 'help [command]'
-  }
-
-  get getAlias(): string {
-    return this._alias
-  }
-
-  get getName(): string {
-    return this._name
   }
 
   public execute(args: string[]) {

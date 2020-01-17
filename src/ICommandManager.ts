@@ -1,4 +1,4 @@
-import { AbstractCommand } from './CommandBase'
+import { CommandBase } from './CommandBase'
 
 export interface ICommandManager {
   /**
@@ -17,7 +17,7 @@ export interface ICommandManager {
   /**
    * ! Mark for possible removal
    */
-  getCommands(): Map<string, AbstractCommand>
+  getCommands(): Map<string, CommandBase>
 
-  registerCommand(command: AbstractCommand): AbstractCommand
+  registerCommand(command: CommandBase): CommandBase
 }
