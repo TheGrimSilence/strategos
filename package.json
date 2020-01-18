@@ -1,6 +1,6 @@
 {
   "name": "strategos",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "A TypeScript focused solution for command-line applications.",
   "main": "index.js",
   "scripts": {
