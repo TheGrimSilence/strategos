@@ -29,7 +29,7 @@ export class CommandHandler {
     } catch (commandException) {
       console.log(commandException.message)
     }
-    
+
     return i
   }
 
@@ -42,17 +42,10 @@ export class CommandHandler {
     this.commandSet.add(command)
 
     // If there's an alias, register it
-    if (command._alias) {
-      for (const alias of command.getAlias) {
-        const icommand: CommandBase = this.commandMap.get(alias)!
-
-        if (icommand === undefined || icommand.getName.match(alias)) {
-          this.commandMap.set(alias, command)
-        }
-      }
+    if (command.getAlias) {
+      this.commandMap.set(command.getAlias, command)
     }
 
-    this.commandMap.set(command.getAlias, command)
 
     console.log(this.commandMap)
 
