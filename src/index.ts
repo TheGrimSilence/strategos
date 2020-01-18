@@ -1,4 +1,4 @@
-export { CommandBase as AbstractCommand } from './CommandBase'
+export { CommandBase } from './CommandBase'
 export { CommandHandler } from './CommandHandler'
 export { CommandHelp } from './CommandHelp'
 export { Strategos } from './Strategos'
