@@ -53,15 +53,6 @@ export class CommandHandler {
   }
 
   /**
-   * Returns a map of all commands. Used for manual debugging.
-   */
-  public getCommands(): Map<string, CommandBase> {
-    console.log(this.commandMap)
-
-    return this.commandMap
-  }
-
-  /**
    * Ensure we can actually execute a command
    * @param args the arguments handed down from instantiation
    * @param command the command to execute

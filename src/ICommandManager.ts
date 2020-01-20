@@ -6,13 +6,7 @@ export interface ICommandManager {
    */
   executeCommand(rawCommand: string[]): void
   /**
-   * ! Mark for possible removal
+   * Registers a new command.
    */
-  // getPossibleCommands?();
-  /**
-   * ! Mark for possible removal
-   */
-  getCommands(): Map<string, CommandBase>
-
   registerCommand(command: CommandBase): CommandBase
 }

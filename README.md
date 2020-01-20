@@ -16,16 +16,13 @@ Creating a command is extremely simple. Here's a simple echo command:
 
 ```typescript
 class CommandEcho extends CommandBase {
-  readonly _name: string
-  readonly _alias: string
-  readonly _version: string
-
   constructor() {
-    super()
-
-    this._name = 'echo'
-    this._alias = 'e'
-    this._version = '1.0.0'
+    super({
+      name: 'echo',
+      alias: 'e',
+      description: 'Returns input',
+      version: '1.0.0'
+    })
   }
 
   getUsage() {

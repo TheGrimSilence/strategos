@@ -1,16 +1,13 @@
 import { CommandBase } from './CommandBase'
 
 export class CommandHelp extends CommandBase {
-  readonly _name: string
-  readonly _alias: string
-  readonly _version: string
-
   constructor() {
-    super()
-
-    this._name = 'help'
-    this._alias = 'h'
-    this._version = '1.0.0'
+    super({
+      name: 'help',
+      alias: 'h',
+      description: 'Returns helpful information about a given command, or the program.',
+      version: '1.0.0'
+    })
   }
 
   public getUsage(): string {
