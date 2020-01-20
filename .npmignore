@@ -2,3 +2,10 @@ node_modules/
 tsconfig.json/
 yarn.lock/
 .gitignore
+src/__tests__/
+usage-styles/
+.github/
+jest.config.js
+TODO.md
+tsconfig.json
+tslint.json

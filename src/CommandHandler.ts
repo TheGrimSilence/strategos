@@ -5,14 +5,12 @@ export class CommandHandler {
     string,
     CommandBase
   >();
-  private readonly commandSet: Set<CommandBase> = new Set<CommandBase>();
 
   /**
    * Execute the command
    * @param rawCommand
    */
   public executeCommand(rawCommand: string[]): number {
-    console.log(`Strategos.CommandHandler.executeCommand(${rawCommand})`)
     const s = rawCommand[0]
     rawCommand.shift()
     const icommand: CommandBase = this.commandMap.get(s)!
@@ -27,7 +25,7 @@ export class CommandHandler {
         }
       }
     } catch (commandException) {
-      console.log(commandException.message)
+      console.error(commandException.message)
     }
 
     return i
@@ -37,17 +35,12 @@ export class CommandHandler {
    * Adds the command and any aliases it has to the internal map of available commands
    */
   public registerCommand(command: CommandBase): CommandBase {
-    console.log(`CommandHandler.registerCommand(${command.getName}, ${command})`)
     this.commandMap.set(command.getName, command)
-    this.commandSet.add(command)
 
     // If there's an alias, register it
     if (command.getAlias) {
       this.commandMap.set(command.getAlias, command)
     }
-
-
-    console.log(this.commandMap)
 
     return command
   }
@@ -63,7 +56,7 @@ export class CommandHandler {
 
       return true
     } catch (error) {
-      console.log(error.message)
+      console.error(error.message)
     }
 
     return false

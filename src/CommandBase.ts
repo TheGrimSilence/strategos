@@ -1,6 +1,6 @@
 interface ICommand {
   name: string
-  alias: string
+  alias?: string
   description: string
   version?: string
 }
@@ -19,7 +19,7 @@ export abstract class CommandBase {
 
   /** Return the alias for the given command. */
   get getAlias(): string {
-    return this._command.alias
+    return this._command.alias!
   }
 
   /** Return the name of the given command. */
@@ -38,6 +38,6 @@ export abstract class CommandBase {
   private verifyVersion(): void {
     let isValidSemVer = RegExp(/^ (0 | [1 - 9]\d *).(0 | [1 - 9]\d *).(0 | [1 - 9]\d *) $ /)
       .test(this._command.version!)
-    if (isValidSemVer === false) console.log(`Error: ${this._command.version} is not valid according to SemVer!`)
+    if (isValidSemVer === false) console.error(`Error: ${this._command.version} is not valid according to SemVer!`)
   }
 }

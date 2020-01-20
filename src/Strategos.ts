@@ -13,8 +13,6 @@ export class Strategos {
   public constructor(args: string[], commands?: CommandBase[]) {
     this.commandManager = this.createCommandManager()
 
-    console.log(`Strategos:constructor << ${args}`)
-
     if (commands!.length > 0) {
       commands!.forEach(command => {
         this.getCommandManager().registerCommand(command)
