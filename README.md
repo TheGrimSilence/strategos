@@ -4,6 +4,17 @@ A TypeScript focused solution for command-line applications.
 
 Strategos is a new way to build command-line applications. Build with some class, and skip the method chaining.
 
+## ⚠ Under Development ⚠
+
+Strategos, although functional, is still a long ways from "general usage" in that it's lacking many useful features. This project is a learning experience for myself and not meant to be widely (or generally) used. Below are some wanted features.
+
+- Options
+  - Currently I'm still debating how to handle options in the best way possible.
+- Dynamic usage information
+- Subcommands
+
+Once these few items are taken care of, Strategos, like every good commander, will be battle tested and then enlisted! 🛡⚔
+
 ## Install
 
 ```bash
