@@ -1,7 +1,7 @@
 import { Strategos } from '../Strategos'
 import { Command } from '../Command'
 
-class Echo extends Command {
+export class Echo extends Command {
   constructor() {
     super({
       name: 'echo'
