@@ -91,7 +91,7 @@ export class Strategos {
   }
 
   /**
-   * Ideally, this should parse arguments and extract global commands, returning the new args.
+   * Ideally, this should parse arguments and extract global options, returning the new args.
    */
   private _pargeArgs(args: string[]): string[] {
 
