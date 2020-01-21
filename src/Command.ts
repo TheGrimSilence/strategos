@@ -1,5 +1,5 @@
 interface ICommand {
-  name: string
+  getName: string
   alias?: string
   description?: string
 }
@@ -13,8 +13,8 @@ export abstract class Command implements ICommand {
 
   abstract execute(args: string[]): void
 
-  public get name(): string {
-    return this.name
+  public get getName(): string {
+    return this._command.getName
   }
 
   private _parseArgs(args: string[]) {
