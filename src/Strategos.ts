@@ -17,7 +17,7 @@ export class Strategos {
    * @param args the arguments passed from `process.argv`
    * @param commands an array of commands to be registered.
    */
-  public main(args: string[], config: IStrategosBehavior, commands?: Command[]): void {
+  public constructor(args: string[], config: IStrategosBehavior, commands?: Command[]) {
     switch (config.whenArgsNotSpecified) {
       case 'emitError':
         this._errorIfNoArgs(args)

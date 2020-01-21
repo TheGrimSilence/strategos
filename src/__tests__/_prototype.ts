@@ -14,4 +14,4 @@ export class Echo extends Command {
   }
 }
 
-new Strategos().main(process.argv.slice(2), {}, [new Echo])
+new Strategos(process.argv.slice(2), {}, [new Echo])
