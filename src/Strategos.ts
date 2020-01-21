@@ -8,7 +8,7 @@ interface IStrategosBehavior {
 }
 
 export class Strategos {
-  private _commands: any[] = []
+  private _commands: Set<Command> = new Set<Command>()
 
   /**
    * The entry point for Strategos.
@@ -29,7 +29,12 @@ export class Strategos {
         break
     }
 
-    if (commands) this._commands = commands
+    if (commands) {
+      commands.forEach(command => {
+        this._commands.add(command)
+      })
+      // this._commands = commands
+    }
 
     this._start(args).catch(reason => {
       console.log(reason)
@@ -61,7 +66,7 @@ export class Strategos {
   private _createCommandCollection(): CommandCollection {
     const commandCollection = new CommandCollection()
 
-    if (this._commands.length) {
+    if (this._commands.size) {
       this._commands.forEach((command: Command) => {
         commandCollection.add(command.name, command)
       })

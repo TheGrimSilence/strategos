@@ -4,7 +4,7 @@ import { Command } from '../Command'
 class Echo extends Command {
   constructor() {
     super({
-      getName: 'echo'
+      name: 'echo'
     })
   }
 
