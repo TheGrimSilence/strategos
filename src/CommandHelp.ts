@@ -7,7 +7,7 @@ export class CommandHelp extends Command {
     })
   }
 
-  execute(args: string[]) {
+  execute() {
     console.log(`Executed ${CommandHelp.name}`)
   }
 }

@@ -22,14 +22,18 @@ interface ICollection {
    * @param id the item being gotten.
    */
   get(id: string): unknown
+  /**
+   * The size of the collection.
+   */
+  size(): number
 }
 
-interface IOption {
+export interface IOption {
   name: string
   type?: 'required' | 'variadic' | 'boolean'
   alias?: string | string[]
   description?: string
-  action?: () => void
+  action?: (...unknown: unknown[]) => void
 }
 
 export class CommandCollection implements ICollection {
@@ -49,6 +53,10 @@ export class CommandCollection implements ICollection {
 
   public get(id: string): Command | undefined {
     return this._commands.get!(id)
+  }
+
+  public size(): number {
+    return this._commands.size
   }
 }
 
@@ -72,5 +80,9 @@ export class OptionCollection implements ICollection {
 
   public get(id: string): IOption | undefined {
     return this._options.get(id)
+  }
+
+  public size(): number {
+    return this._options.size
   }
 }

@@ -50,11 +50,10 @@ export class Strategos {
     const commandCollection: CommandCollection = this._createCommandCollection()
     const command = args[0]
     args.shift()
-    console.log(args)
 
     if (commandCollection.has(command)) {
-      console.log(`Found ${command}`)
-      commandCollection.get(command)!.execute(args)
+      commandCollection.get(command)!.loadArgs(args)
+      commandCollection.get(command)!.execute()
     } else {
       throw new Error(`Command:${command} not found!`)
     }

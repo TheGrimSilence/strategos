@@ -1,16 +1,24 @@
-import { Strategos } from '../Strategos'
 import { Command } from '../Command'
+import { Strategos } from '../Strategos'
 
 export class Echo extends Command {
   constructor() {
     super({
       name: 'echo'
     })
+
+    this.addOption({
+      name: 'double',
+      description: 'repeats the stdin twice',
+      action: input => {
+        console.log(input)
+        console.log(input)
+      }
+    })
   }
 
-  execute(args: string[]): void {
+  execute(): void {
     console.log(`Executed ${Echo.name}`)
-
   }
 }
 
