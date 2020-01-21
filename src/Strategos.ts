@@ -1,5 +1,5 @@
 import { NoArgumentsError } from './Errors'
-import { CommandCollection } from './CommandCollection'
+import { CommandCollection } from './Collections'
 import { CommandHelp } from './CommandHelp'
 import { Command } from './Command'
 
@@ -63,11 +63,11 @@ export class Strategos {
 
     if (this._commands.length) {
       this._commands.forEach((command: Command) => {
-        commandCollection.register(command.name, command)
+        commandCollection.add(command.name, command)
       })
     }
 
-    commandCollection.register('help', new CommandHelp)
+    commandCollection.add('help', new CommandHelp)
 
     return commandCollection
   }
