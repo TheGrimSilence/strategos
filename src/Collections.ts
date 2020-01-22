@@ -34,7 +34,7 @@ interface ICollection {
 
 export interface IOption {
   name: string
-  type?: 'required' | 'variadic' | 'boolean'
+  type: 'required' | 'optional' | 'variadic' | 'boolean'
   alias?: string | string[]
   description?: string
   action?: (...unknown: unknown[]) => void

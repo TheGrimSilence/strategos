@@ -8,6 +8,7 @@ export class Echo extends Command {
 
     this.addOption({
       name: 'double',
+      type: 'optional',
       description: 'repeats the stdin twice',
       action: input => {
         console.log(input)
@@ -23,4 +24,4 @@ export class Echo extends Command {
 
 const mockInput = ['echo', '--double']
 
-new Strategos(mockInput, {}, [new Echo])
+new Strategos(mockInput, { whenArgsNotSpecified: 'emitError' }, [new Echo])

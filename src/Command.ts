@@ -35,5 +35,16 @@ export abstract class Command implements ICommand {
    * @param args 
    */
   public parse() {
+    console.log('\nLogging arguments')
+    argumentHandler.forEach(arg => {
+      console.log(' ', arg)
+    })
+    console.log('\nLogging Options')
+
+    this._options.forEach((id, option) => {
+      console.log('', id, option)
+    })
+
+    
   }
 }

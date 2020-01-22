@@ -5,7 +5,8 @@ import { NoArgumentsError } from './Errors'
 import { argumentHandler } from './ArgumentSet'
 
 interface IStrategosBehavior {
-  whenArgsNotSpecified?: 'emitError' | 'emitHelp'
+  /** If no args are given, should we error or help? */
+  whenArgsNotSpecified: 'emitError' | 'emitHelp'
 }
 
 export class Strategos {
