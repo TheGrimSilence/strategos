@@ -1,7 +1,8 @@
-import { NoArgumentsError } from './Errors'
 import { CommandCollection } from './Collections'
-import { CommandHelp } from './CommandHelp'
 import { Command } from './Command'
+import { CommandHelp } from './CommandHelp'
+import { NoArgumentsError } from './Errors'
+import { argumentHandler } from './ArgumentSet'
 
 interface IStrategosBehavior {
   whenArgsNotSpecified?: 'emitError' | 'emitHelp'
@@ -29,26 +30,27 @@ export class Strategos {
         break
     }
 
+    args.forEach((arg: string) => {
+      argumentHandler.add(arg)
+    })
+
     if (commands) {
       commands.forEach(command => {
         this._commands.add(command)
       })
     }
 
-    this._start(args).catch(reason => {
-      console.log(reason)
-    }
-    )
+    this._start()
   }
 
   /**
    * The startup phase does general assigning and easy parsing.
    * @param args the arguments passed from `process.argv`
    */
-  private async _start(args: string[]): Promise<void> {
+  private _start(): void {
     const commandCollection: CommandCollection = this._createCommandCollection()
-    const command = args[0]
-    args.shift()
+    const command = argumentHandler.get(0)
+    argumentHandler.delete(command)
 
     if (commandCollection.has(command)) {
       commandCollection.get(command)!.execute()
