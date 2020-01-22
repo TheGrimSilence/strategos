@@ -1,4 +1,5 @@
 import { IOption, OptionCollection } from './Collections'
+import { argumentHandler } from './ArgumentSet'
 
 interface ICommand {
   name: string
@@ -14,6 +15,8 @@ export abstract class Command implements ICommand {
   constructor(command: ICommand) {
     this._command = command
     this._parseArgs()
+    console.log(argumentHandler)
+
   }
 
   abstract execute(): void

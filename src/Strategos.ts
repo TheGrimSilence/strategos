@@ -48,9 +48,9 @@ export class Strategos {
    * @param args the arguments passed from `process.argv`
    */
   private _start(): void {
-    const commandCollection: CommandCollection = this._createCommandCollection()
     const command = argumentHandler.get(0)
     argumentHandler.delete(command)
+    const commandCollection: CommandCollection = this._createCommandCollection()
 
     if (commandCollection.has(command)) {
       commandCollection.get(command)!.execute()
