@@ -40,6 +40,12 @@ export interface IOption {
   action?: (...unknown: unknown[]) => void
 }
 
+
+/**
+ * The `CommandCollection` stores all commands passed to `Strategos`
+ * 
+ * ! If things get out of order, create a global store of Collections
+ */
 export class CommandCollection implements ICollection {
   private _commands: Map<string, Command> = new Map<string, Command>()
 
@@ -66,6 +72,8 @@ export class CommandCollection implements ICollection {
 
 /**
  * Ideally, this should keep track of what options belong to what command, including global options.
+ * 
+ * ! If things get out of order, create a global store of Collections
  */
 export class OptionCollection implements ICollection {
   private _options: Map<string, IOption> = new Map<string, IOption>()

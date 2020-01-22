@@ -10,13 +10,9 @@ interface ICommand {
 export abstract class Command implements ICommand {
   private _command: ICommand
   private _options: OptionCollection = new OptionCollection()
-  private _args: string[] = []
 
   constructor(command: ICommand) {
     this._command = command
-    this._parseArgs()
-    console.log(argumentHandler)
-
   }
 
   abstract execute(): void
@@ -38,6 +34,6 @@ export abstract class Command implements ICommand {
    * ! If option.type = boolean, option.name = option.value 
    * @param args 
    */
-  private _parseArgs() {
+  public parse() {
   }
 }

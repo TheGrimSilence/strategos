@@ -9,7 +9,7 @@ interface IStrategosBehavior {
 }
 
 export class Strategos {
-  private _commands: Set<Command> = new Set<Command>()
+  private _commands: Set<Command>
 
   /**
    * The entry point for Strategos.
@@ -18,7 +18,7 @@ export class Strategos {
    * @param args the arguments passed from `process.argv`
    * @param commands an array of commands to be registered.
    */
-  public constructor(args: string[], config: IStrategosBehavior, commands?: Command[]) {
+  public constructor(args: string[], config: IStrategosBehavior, commands: Command[]) {
     switch (config.whenArgsNotSpecified) {
       case 'emitError':
         this._errorIfNoArgs(args)
@@ -34,35 +34,34 @@ export class Strategos {
       argumentHandler.add(arg)
     })
 
-    if (commands) {
-      commands.forEach(command => {
-        this._commands.add(command)
-      })
-    }
+    this._commands = new Set(commands)
 
-    this._start()
+    this._start().catch(reason => {
+      console.error('_start:failed', reason)
+    })
   }
 
   /**
    * The startup phase does general assigning and easy parsing.
    * @param args the arguments passed from `process.argv`
    */
-  private _start(): void {
+  private async _start(): Promise<void> {
     const command = argumentHandler.get(0)
     argumentHandler.delete(command)
-    const commandCollection: CommandCollection = this._createCommandCollection()
+    const commandCollection: CommandCollection = await this._createCommandCollection()
 
     if (commandCollection.has(command)) {
+      commandCollection.get(command)!.parse()
       commandCollection.get(command)!.execute()
     } else {
-      throw new Error(`Command:${command} not found!`)
+      throw new Error(`Command ${command} not found!`)
     }
   }
 
   /**
    * Creates the command collection from the command array.
    */
-  private _createCommandCollection(): CommandCollection {
+  private async _createCommandCollection(): Promise<CommandCollection> {
     const commandCollection = new CommandCollection()
 
     if (this._commands.size) {
@@ -78,20 +77,16 @@ export class Strategos {
 
   /** 
    * By default, Strategos will *error* when no arguments are specified.
-   * TODO: The developer may specify the default action via an option later.
    */
-  private _errorIfNoArgs(args: string[]): boolean {
+  private _errorIfNoArgs(args: string[]): void {
     try {
       if (args.length === 0) {
         throw new NoArgumentsError('No arguments were specified! Cannot run without arguments to parse!')
       }
     } catch (error) {
       console.error(error.name, error.message)
-
-      return false
+      process.exit(1)
     }
-
-    return true
   }
 
   /**
