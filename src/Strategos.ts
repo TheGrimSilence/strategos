@@ -33,7 +33,6 @@ export class Strategos {
       commands.forEach(command => {
         this._commands.add(command)
       })
-      // this._commands = commands
     }
 
     this._start(args).catch(reason => {
@@ -52,7 +51,6 @@ export class Strategos {
     args.shift()
 
     if (commandCollection.has(command)) {
-      commandCollection.get(command)!.loadArgs(args)
       commandCollection.get(command)!.execute()
     } else {
       throw new Error(`Command:${command} not found!`)

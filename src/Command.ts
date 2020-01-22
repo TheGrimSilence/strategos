@@ -16,11 +16,6 @@ export abstract class Command implements ICommand {
     this._parseArgs()
   }
 
-  public loadArgs(args: string[]): void {
-    this._args = args
-  }
-
-  // abstract execute(args: string[]): void
   abstract execute(): void
 
   public get name(): string {
