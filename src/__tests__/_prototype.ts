@@ -1,5 +1,4 @@
-import { Command } from '../Command'
-import { Strategos } from '../Strategos'
+import { Command, Strategos } from '../'
 
 export class Echo extends Command {
   constructor() {
@@ -22,4 +21,6 @@ export class Echo extends Command {
   }
 }
 
-new Strategos(process.argv.slice(2), {}, [new Echo])
+const mockInput = ['echo', '--double']
+
+new Strategos(mockInput, {}, [new Echo])
