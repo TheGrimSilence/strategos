@@ -41,6 +41,11 @@ interface ISet {
   clear(): void
 }
 
+/**
+ * The ArgumentSet is the global store of arguments passed into Strategos.
+ * Rather that a simple array, Strategos uses a `Set`, this offers a few 
+ * benefits performance-wise, and locks down on adding repetitive items.
+ */
 class ArgumentSet implements ISet {
   private _arguments: Set<string> = new Set<string>()
 
@@ -77,4 +82,7 @@ class ArgumentSet implements ISet {
   }
 }
 
+/**
+ * The `argumentHandler` exists to instantiate a global `ArgumentSet` instance.
+ */
 export const argumentHandler = new ArgumentSet()
