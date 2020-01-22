@@ -55,7 +55,7 @@ interface ISet {
    * Get a given argument from the set.
    * @param arg the argument being gotten.
    */
-  get(arg: string): string
+  get(arg: number): string
 
   /**
    * The size of the set.
@@ -149,16 +149,10 @@ export class ArgumentSet implements ISet {
     return this._arguments.has(arg)
   }
 
-  public get(arg: string): string {
-    let gotValue: string = ''
+  public get(arg: number): string {
+    let value = [...this._arguments]
 
-    this._arguments.forEach(value => {
-      if (value === arg) {
-        gotValue = value
-      }
-    })
-
-    return gotValue
+    return value[arg]
   }
 
   public size(): number {
