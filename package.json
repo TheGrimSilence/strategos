@@ -34,6 +34,7 @@
     "typescript": "^3.6.3"
   },
   "dependencies": {
+    "@yarnpkg/pnpify": "^2.0.0-rc.16",
     "chalk": "^3.0.0"
   }
 }
