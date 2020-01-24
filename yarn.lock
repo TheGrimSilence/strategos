@@ -428,10 +428,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^12.12.11":
-  version: 12.12.25
-  resolution: "@types/node@npm:12.12.25"
-  checksum: 2bc6bd1139551e403c9c00e002bbe66a7771084b68eb1c38ee9077aa13689e20c097a7c7fdb08adf6a1245863cd363d8d66d2b3fe6f00ae1ae3b3cf539827f73
+"@types/node@npm:^13.5.0":
+  version: 13.5.0
+  resolution: "@types/node@npm:13.5.0"
+  checksum: c168b6228f3a0845fa7530169b5c25dfce069f5cd315ebaade02875eaadbea8eca8dc1337b6b1996ee268b1d649aaef89c2aafa452b2b24f4235eaecf83b4941
   languageName: node
   linkType: hard
 
@@ -4252,12 +4252,12 @@ resolve@1.1.7:
   resolution: "strategos@workspace:."
   dependencies:
     "@types/jest": ^24.9.0
-    "@types/node": ^12.12.11
+    "@types/node": ^13.5.0
     "@yarnpkg/pnpify": ^2.0.0-rc.16
     chalk: ^3.0.0
     jest: ^24.9.0
     ts-jest: ^24.3.0
-    tslint: ^5.20.1
+    tslint: ^6.0.0
     typescript: ^3.6.3
   languageName: unknown
   linkType: soft
@@ -4544,16 +4544,16 @@ resolve@1.1.7:
   languageName: node
   linkType: hard
 
-"tslib@npm:^1.8.0, tslib@npm:^1.8.1":
+"tslib@npm:^1.10.0, tslib@npm:^1.8.1":
   version: 1.10.0
   resolution: "tslib@npm:1.10.0"
   checksum: 626387669b38797372530d84df93dafcc0eca2b3bad31b109c7308b2e8d9c4ed0ba94113eb08a6946aa1fbee3b619fb69dd81f8681654bbc806cf8f208caeb47
   languageName: node
   linkType: hard
 
-"tslint@npm:^5.20.1":
-  version: 5.20.1
-  resolution: "tslint@npm:5.20.1"
+"tslint@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "tslint@npm:6.0.0"
   dependencies:
     "@babel/code-frame": ^7.0.0
     builtin-modules: ^1.1.1
@@ -4566,13 +4566,13 @@ resolve@1.1.7:
     mkdirp: ^0.5.1
     resolve: ^1.3.2
     semver: ^5.3.0
-    tslib: ^1.8.0
+    tslib: ^1.10.0
     tsutils: ^2.29.0
   peerDependencies:
     typescript: ">=2.3.0-dev || >=2.4.0-dev || >=2.5.0-dev || >=2.6.0-dev || >=2.7.0-dev || >=2.8.0-dev || >=2.9.0-dev || >=3.0.0-dev || >= 3.1.0-dev || >= 3.2.0-dev"
   bin:
-    tslint: ./bin/tslint
-  checksum: 19b8ea14c82057d4d08cbc41dafc1403472435479d8395df7a62760b1d41f5b9c7890cd9d67a5845082e83ed057f7e9d3740a3ea4dff735d38ade1ffa6fa5a65
+    tslint: bin/tslint
+  checksum: 2d337cf44ec54a53162d01a93fcd8709298faf03ace58de650556a3456493621c527e51ebe6c245cb6d36549afbaa48b9edf803a28f67e4da716a47f7dbd5838
   languageName: node
   linkType: hard
 
