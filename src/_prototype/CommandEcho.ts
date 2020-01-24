@@ -17,6 +17,14 @@ export class Echo extends Command {
         console.log(input)
       }
     })
+
+    this.addOption({
+      name: 'verbose',
+      alias: 'v',
+      required: false,
+      type: 'boolean',
+      description: 'A simple verbose option!'
+    })
   }
 
   execute(): void {

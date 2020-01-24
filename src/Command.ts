@@ -7,10 +7,12 @@ interface ICommand {
   description?: string
 }
 
+
+
 export abstract class Command implements ICommand {
   private _command: ICommand
   private _options: OptionCollection = new OptionCollection()
-  private _config: unknown
+  private _config: Map<string, boolean | string | number | string[]> = new Map<string, boolean | string | number | string[]>()
 
   constructor(command: ICommand) {
     this._command = command
@@ -43,7 +45,7 @@ export abstract class Command implements ICommand {
    * @param args 
    */
   public parse() {
-    // * Check for required arguments and error if missing.
+    // MissingArgument check
     if (this._options.hasRequiredOption()) {
       const requiredOptions = this._options.getRequiredOptions()
 
@@ -57,14 +59,86 @@ export abstract class Command implements ICommand {
       })
     }
 
-    
+    let optionPass: number = 1
 
-    this._options.forEach((id, option) => {
-      console.log(`ID: ${id}`)
+    // * if arg = id, id = arg parameters
+    this._options.forEach((id: string, option: IOption) => {
+      let argsPass: number = 1
+      console.log(`Option ${id} pass ${optionPass}`)
+      let optionId: string
+      let optionValues: string | boolean | string[] | number
 
       if (option.action) {
         option.action()
+      } else {
+
+        argumentHandler.forEach((arg: string) => {
+
+          console.log(`Argument ${arg} pass ${argsPass}`)
+          let slicedArg: string
+
+          // slice long into readable arg
+          if (arg.startsWith('--')) {
+            console.log(arg, 'is a long')
+            slicedArg = arg.slice(2)
+
+            // if the arg is an option, assign it
+            if (option.name === slicedArg) {
+              console.log(`${option.name}=${slicedArg}`)
+              switch (option.type) {
+                case 'boolean':
+                  optionId = option.name
+                  optionValues = true
+                  break
+                case 'variadic':
+                  break
+              }
+            }
+
+          }
+          // slice short into readable arg
+          else if (arg.startsWith('-')) {
+            console.log(arg, 'is a short')
+            slicedArg = arg.slice(1)
+
+            if (arg.length > 1) {
+              let slicedArgs = slicedArg.split('')
+              slicedArgs.forEach((arg: string) => {
+                if (this._options.has(arg)) {
+                  console.log(`${option.name}=${slicedArg}`)
+                  switch (option.type) {
+                    case 'boolean':
+                      optionId = option.name
+                      optionValues = true
+                      break
+                    case 'variadic':
+                      break
+                  }
+                }
+              })
+            }
+          }
+          // the argument must be a value
+          else {
+            console.log(arg, 'is a value?')
+            optionValues += arg
+          }
+          // if (slicedArg === id) {
+          //   builtOption = {
+          //     id: undefined
+          //   }
+          // }
+          argsPass = argsPass + 1
+          console.log('optionId', optionId)
+
+        })
       }
+
+      this._config.set(optionId!, optionValues!)
+
+      console.log(this._config)
+      optionPass = optionPass + 1
     })
+    
   }
 }

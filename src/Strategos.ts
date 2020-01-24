@@ -7,13 +7,10 @@ import { argumentHandler } from './ArgumentSet'
 interface IStrategosBehavior {
   /** If no args are given, should we error or help? */
   whenArgsNotSpecified: 'emitError' | 'emitHelp'
-  /** These options are global. */
-  globalOptions?: IOption[]
 }
 
 export class Strategos {
   private _commands: Set<Command>
-  private _options?: Set<IOption>
 
   /**
    * The entry point for Strategos.
@@ -40,10 +37,6 @@ export class Strategos {
 
     this._commands = new Set(commands)
 
-    if (config.globalOptions) {
-      this._options = new Set(config.globalOptions)
-    }
-
     this._start().catch(reason => {
       console.error('_start:failed', reason)
     })
@@ -64,8 +57,6 @@ export class Strategos {
     } else {
       throw new Error(`Command ${command} not found!`)
     }
-
-    this._pargeArgs()
   }
 
   /**
@@ -97,17 +88,5 @@ export class Strategos {
       console.error(error.name, error.message)
       process.exit(1)
     }
-  }
-
-  /**
-   * TODO Pull global options from 
-   */
-  private _pargeArgs(): void {
-    console.log(argumentHandler.reveal())
-
-    argumentHandler.forEach(arg => {
-      console.log(arg)
-
-    })
   }
 }
