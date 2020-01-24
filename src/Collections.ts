@@ -34,10 +34,22 @@ interface ICollection {
 
 export interface IOption {
   name: string
-  type: 'required' | 'optional' | 'variadic' | 'boolean'
+  /**
+   * required: true
+   * <input>
+   * <input ...>
+   * <true | false>
+   * 
+   * required: false
+   * [input]
+   * [input ...]
+   * [true | false]
+   */
+  required: boolean
+  type?: 'variadic' | 'boolean'
   alias?: string
   description?: string
-  action?: (...unknown: unknown[]) => void
+  action?: (...unknown: any[]) => void
 }
 
 
@@ -82,7 +94,7 @@ export class OptionCollection implements ICollection {
   public add(id: string, option: IOption): void {
     this._options.set(id, option)
 
-    if (option.type === 'required') {
+    if (option.required) {
       this._required.add(option)
     }
   }

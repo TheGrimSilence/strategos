@@ -1,4 +1,4 @@
-import { Command, Strategos } from '../'
+import { Command } from '..'
 
 export class Echo extends Command {
   constructor() {
@@ -9,9 +9,10 @@ export class Echo extends Command {
     this.addOption({
       name: 'double',
       alias: 'd',
-      type: 'required',
+      required: true,
+      type: 'variadic',
       description: 'repeats the stdin twice',
-      action: input => {
+      action: (input: string) => {
         console.log(input)
         console.log(input)
       }
@@ -22,10 +23,3 @@ export class Echo extends Command {
     console.log(`Executed ${Echo.name}`)
   }
 }
-
-/**
- * TODO Test for conjoined aliases like `-abc`
- */
-const mockInput = ['echo']
-
-new Strategos(mockInput, { whenArgsNotSpecified: 'emitError' }, [new Echo])

@@ -1,5 +1,5 @@
 import { CommandCollection } from '../Collections'
-import { Echo } from './_prototype'
+import { Echo } from '../_prototype/CommandEcho'
 // jest.mock('../Collections.ts')
 
 describe('CommandCollection', () => {

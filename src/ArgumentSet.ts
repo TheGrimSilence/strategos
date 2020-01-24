@@ -86,6 +86,10 @@ class ArgumentSet implements ISet {
   public clear(): void {
     this._arguments.clear()
   }
+
+  public reveal(): Set<string> {
+    return this._arguments
+  }
 }
 
 /**
