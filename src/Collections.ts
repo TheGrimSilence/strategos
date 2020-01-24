@@ -77,9 +77,14 @@ export class CommandCollection implements ICollection {
  */
 export class OptionCollection implements ICollection {
   private _options: Map<string, IOption> = new Map<string, IOption>()
+  private _required: Set<IOption> = new Set<IOption>()
 
   public add(id: string, option: IOption): void {
     this._options.set(id, option)
+
+    if (option.type === 'required') {
+      this._required.add(option)
+    }
   }
 
   public forEach(callback: (id: string, option: IOption) => void): void {
@@ -96,5 +101,19 @@ export class OptionCollection implements ICollection {
 
   public size(): number {
     return this._options.size
+  }
+
+  // * Advanced Operations * //
+
+  public hasRequiredOption(): boolean {
+    if (this._required.size) {
+      return true
+    }
+
+    return false
+  }
+
+  public getRequiredOptions(): Set<IOption> {
+    return this._required
   }
 }

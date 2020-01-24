@@ -9,7 +9,7 @@ export class Echo extends Command {
     this.addOption({
       name: 'double',
       alias: 'd',
-      type: 'optional',
+      type: 'required',
       description: 'repeats the stdin twice',
       action: input => {
         console.log(input)
@@ -26,6 +26,6 @@ export class Echo extends Command {
 /**
  * TODO Test for conjoined aliases like `-abc`
  */
-const mockInput = ['echo', '--double', '-d']
+const mockInput = ['echo']
 
 new Strategos(mockInput, { whenArgsNotSpecified: 'emitError' }, [new Echo])

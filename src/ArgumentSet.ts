@@ -58,6 +58,12 @@ class ArgumentSet implements ISet {
   }
 
   public has(arg: string): boolean {
+    console.log('has', arg)
+
+    if (this._arguments.has(`--${arg}`)) {
+      return this._arguments.has(`--${arg}`)
+    }
+
     return this._arguments.has(arg)
   }
 

@@ -23,6 +23,12 @@ export abstract class Command implements ICommand {
 
   protected addOption(option: IOption): void {
     this._options.add(option.name, option)
+
+    if (option.alias) {
+      this._options.has(option.alias)
+        ? console.error(`Option alias ${option.alias} already exits, skipping!`)
+        : this._options.add(option.alias, option)
+    }
   }
 
   /**
@@ -32,19 +38,37 @@ export abstract class Command implements ICommand {
    * ! If (this._options.has(arg)) this._options.get(arg) and arg.action()
    * ! If option.type = required, but not provided, MissingParamaterError
    * ! If option.type = boolean, option.name = option.value 
+   * 
+   * TODO Error if required options are missing.
+   * TODO Iterate arguments, assign options, fire option.callback if given.
    * @param args 
    */
   public parse() {
-    console.log('\nLogging arguments')
-    argumentHandler.forEach(arg => {
-      console.log(' ', arg)
-    })
-    console.log('\nLogging Options')
+
+    if (this._options.hasRequiredOption()) {
+      const requiredOptions = this._options.getRequiredOptions()
+
+      requiredOptions.forEach(option => {
+        if (argumentHandler.has(option.name) === false) {
+          console.error(`Option ${option.name} is required, but missing!`)
+          console.error('MissingArgumentExeption');
+          
+          process.exit(1)
+        }
+      })
+    }
+
 
     this._options.forEach((id, option) => {
-      console.log('', id, option)
-    })
+      console.log(`ID: ${id}`)
 
-    
+      if (option.type === 'required') {
+        console.log(`${id}:required, searching`)
+
+        if (argumentHandler.has(id) === false) {
+          console.log(`Error: ${id} is missing`)
+        }
+      }
+    })
   }
 }
