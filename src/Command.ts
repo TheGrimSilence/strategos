@@ -59,86 +59,57 @@ export abstract class Command implements ICommand {
       })
     }
 
-    let optionPass: number = 1
+    this._options.forEach((id, option) => {
+      let optionName: string
+      let optionValues: any[]
 
-    // * if arg = id, id = arg parameters
-    this._options.forEach((id: string, option: IOption) => {
-      let argsPass: number = 1
-      console.log(`Option ${id} pass ${optionPass}`)
-      let optionId: string
-      let optionValues: string | boolean | string[] | number
+      const tt = [...argumentHandler.reveal()]
 
-      if (option.action) {
-        option.action()
-      } else {
+      for (let i = 0; i < tt.length; i++) {
+        const arg = tt[i]
+        if (arg.startsWith('--')) {
+          optionName = arg.slice(2)
+          switch (option.type) {
+            case 'boolean':
+              optionValues = [true]
+              tt.shift()
+              break
+            case 'variadic':
 
-        argumentHandler.forEach((arg: string) => {
+              break
+            default:
 
-          console.log(`Argument ${arg} pass ${argsPass}`)
-          let slicedArg: string
-
-          // slice long into readable arg
-          if (arg.startsWith('--')) {
-            console.log(arg, 'is a long')
-            slicedArg = arg.slice(2)
-
-            // if the arg is an option, assign it
-            if (option.name === slicedArg) {
-              console.log(`${option.name}=${slicedArg}`)
-              switch (option.type) {
-                case 'boolean':
-                  optionId = option.name
-                  optionValues = true
-                  break
-                case 'variadic':
-                  break
-              }
-            }
-
+              break
           }
-          // slice short into readable arg
-          else if (arg.startsWith('-')) {
-            console.log(arg, 'is a short')
-            slicedArg = arg.slice(1)
+        } else if (arg.startsWith('-')) {
 
-            if (arg.length > 1) {
-              let slicedArgs = slicedArg.split('')
-              slicedArgs.forEach((arg: string) => {
-                if (this._options.has(arg)) {
-                  console.log(`${option.name}=${slicedArg}`)
-                  switch (option.type) {
-                    case 'boolean':
-                      optionId = option.name
-                      optionValues = true
-                      break
-                    case 'variadic':
-                      break
-                  }
-                }
-              })
-            }
-          }
-          // the argument must be a value
-          else {
-            console.log(arg, 'is a value?')
-            optionValues += arg
-          }
-          // if (slicedArg === id) {
-          //   builtOption = {
-          //     id: undefined
-          //   }
-          // }
-          argsPass = argsPass + 1
-          console.log('optionId', optionId)
+        } else {
+        }
 
-        })
       }
 
-      this._config.set(optionId!, optionValues!)
+      argumentHandler.forEach(arg => {
+        let newArg: string
 
-      console.log(this._config)
-      optionPass = optionPass + 1
+        if (arg.startsWith('--')) {
+          newArg = arg.slice(2)
+
+          if (option.name === newArg) {
+            console.log('setting', arg)
+            optionName = newArg
+          } else if (this._options.has(newArg) === false) {
+            argumentHandler.delete(arg)
+          }
+        } else if (arg.startsWith('-')) {
+          
+        } else {
+          if (optionName) {
+            optionValues.add(arg)
+          }
+        }
+      })
     })
-    
+
   }
+
 }
