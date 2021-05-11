@@ -1,3 +1,5 @@
+[ DROPPED IN FAVOR OF [CLIPANION](https://github.com/arcanis/clipanion) ]
+
 # Strategos
 
 A TypeScript focused solution for command-line applications.
